@@ -1,0 +1,169 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-10-27T20:48:03.903Z",
+  "id": "A6ogF5LBitnQkwwZ",
+  "isArchived": false,
+  "meta": null,
+  "name": "HTTP y Webhook",
+  "nodeGroups": [],
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -592,
+        -224
+      ],
+      "id": "ea4f363f-3c5e-42b4-8b5d-5f3329241794",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "content": "### HTTP REQUEST (vos pedis datos afuera)\n\nLa forma más rápida de configurar este nodo:\n\nVas a la documentación de la API (o RapidAPI).\nCopias el código cURL.\nEn N8N, dentro del nodo HTTP Request, pulsas “Import cURL” y pegas.\n\n🔐 Seguridad: API Keys y Credenciales\nAl importar un cURL, la API Key suele quedar pegada como texto plano en el nodo (“Hardcoded”). Esto es una mala práctica.\n\nSolución: Crear una credencial tipo Header Auth en N8N.\nGuardar ahí la clave (x-rapidapi-key).\nSustituir el texto plano por la credencial. Así, si compartes el flujo, nadie roba tu clave.\n\n💡 Concepto Clave: Una API es el idioma que usan las apps para hablar entre sí. Con el nodo HTTP Request, N8N puede “hablar” cualquier idioma.",
+        "height": 336,
+        "width": 752
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1136,
+        -672
+      ],
+      "id": "6729099c-b104-4360-a0d9-35379e329feb",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "url": "https://imdb236.p.rapidapi.com/api/imdb/most-popular-movies",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-rapidapi-host",
+              "value": "imdb236.p.rapidapi.com"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        -224,
+        -80
+      ],
+      "id": "1916b678-c95f-4acf-a276-e6ad0c3406e1",
+      "name": "HTTP Request",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "tK7SknhHtXHWCfTx",
+          "name": "Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "### WEBHOOK (recibis datos desde afuera) \n\nConvierte tu automatización en una API que espera instrucciones.",
+        "height": 192,
+        "width": 560
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -48,
+        -656
+      ],
+      "id": "7acd273f-35a0-4c88-96b9-0cdc20a863b7",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "path": "Webhook prueba",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.2,
+      "position": [
+        -592,
+        -16
+      ],
+      "id": "e0ec60d1-1a86-4ed4-8707-d00825c6cc8e",
+      "name": "Webhook",
+      "webhookId": "96d00ada-707a-4954-8832-9494c9eb99c5"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        80,
+        -80
+      ],
+      "id": "85dedc51-745a-417e-9c86-417f2d52873b",
+      "name": "Respond to Webhook"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "shared": [
+    {
+      "role": "workflow:owner",
+      "workflowId": "A6ogF5LBitnQkwwZ",
+      "projectId": "n72aYZueYjK1JFSF",
+      "createdAt": "2026-10-27T20:48:03.905Z",
+      "updatedAt": "2026-10-27T20:48:03.905Z"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2026-11-05T17:05:41.743Z",
+  "versionId": "a3cae8d9-e7e7-4135-a864-6327724ad492"
+}
