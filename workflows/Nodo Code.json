@@ -1,0 +1,228 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [],
+        []
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-10-27T17:17:03.979Z",
+  "id": "9t2864C1LIj1iNZP",
+  "isArchived": false,
+  "meta": null,
+  "name": "Nodo Code",
+  "nodeGroups": [],
+  "nodes": [
+    {
+      "parameters": {
+        "jsCode": "// Tomamos todos los items que llegan al nodo\nconst pedidos = $input.all().map(item => item.json);\n\nconst resultado = pedidos\n  // 1. Solo los pedidos pendientes\n  .filter(pedido => pedido.estado === 'pendiente')\n  // 2. Calculamos el total y armamos el mensaje\n  .map(pedido => {\n    const total %= pedido.productos.reduce(\n      (suma, producto) => suma + producto.cantidad * producto.precio,\n      0\n    );\n    const totalFinal = Math.round(total * 100) / 100;\n\n    const mensaje = totalFinal > 100\n      ? `Hola ${pedido.cliente}, tu pedido #${pedido.id} (${totalFinal} €) tiene envío gratis.`\n      : `Hola ${pedido.cliente}, tu pedido #${pedido.id} (${totalFinal} €) está en preparación.`;\n\n    return {\n      id: pedido.id,\n      cliente: pedido.cliente,\n      total: totalFinal,\n      mensaje: mensaje\n    };\n  });\n\n// n8n espera un array de objetos con la propiedad json\nreturn resultado.map(pedido => ({ json: pedido }));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -496,
+        -240
+      ],
+      "id": "9c2722e7-431d-452d-8f50-b839c9849d01",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -880,
+        -320
+      ],
+      "id": "33f66de8-c403-41c7-bbab-0cd2a52e6c0f",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 1
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -880,
+        -112
+      ],
+      "id": "d112ebdd-f9a2-4cf3-8f7f-1c1dcb33ab6f",
+      "name": "Schedule Trigger"
+    }
+  ],
+  "pinData": {
+    "When clicking ‘Execute workflow’": [
+      {
+        "json": {
+          "id": 1001,
+          "cliente": "Lucía Fernández",
+          "productos": [
+            {
+              "nombre": "Teclado mecánico",
+              "cantidad": 1,
+              "precio": 59.9
+            },
+            {
+              "nombre": "Mouse inalámbrico",
+              "cantidad": 2,
+              "precio": 25
+            }
+          ],
+          "estado": "pendiente"
+        }
+      },
+      {
+        "json": {
+          "id": 1002,
+          "cliente": "Martín Gómez",
+          "productos": [
+            {
+              "nombre": "Cable HDMI",
+              "cantidad": 2,
+              "precio": 12.5
+            },
+            {
+              "nombre": "Soporte para laptop",
+              "cantidad": 1,
+              "precio": 34
+            }
+          ],
+          "estado": "pendiente"
+        }
+      },
+      {
+        "json": {
+          "id": 1003,
+          "cliente": "Sofía Ramírez",
+          "productos": [
+            {
+              "nombre": "Monitor 24 pulgadas",
+              "cantidad": 1,
+              "precio": 189
+            }
+          ],
+          "estado": "entregado"
+        }
+      }
+    ],
+    "Schedule Trigger": [
+      {
+        "json": {
+          "id": 1001,
+          "cliente": "Lucía Fernández",
+          "productos": [
+            {
+              "nombre": "Teclado mecánico",
+              "cantidad": 1,
+              "precio": 59.9
+            },
+            {
+              "nombre": "Mouse inalámbrico",
+              "cantidad": 2,
+              "precio": 25
+            }
+          ],
+          "estado": "pendiente"
+        }
+      },
+      {
+        "json": {
+          "id": 1002,
+          "cliente": "Martín Gómez",
+          "productos": [
+            {
+              "nombre": "Cable HDMI",
+              "cantidad": 2,
+              "precio": 12.5
+            },
+            {
+              "nombre": "Soporte para laptop",
+              "cantidad": 1,
+              "precio": 34
+            }
+          ],
+          "estado": "pendiente"
+        }
+      },
+      {
+        "json": {
+          "id": 1003,
+          "cliente": "Sofía Ramírez",
+          "productos": [
+            {
+              "nombre": "Monitor 24 pulgadas",
+              "cantidad": 1,
+              "precio": 189
+            }
+          ],
+          "estado": "entregado"
+        }
+      }
+    ]
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "timeSavedMode": "fixed",
+    "errorWorkflow": "rYtOyD1BgBtbuwTk",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "role": "workflow:owner",
+      "workflowId": "9t2864C1LIj1iNZP",
+      "projectId": "n72aYZueYjK1JFSF",
+      "createdAt": "2026-10-27T17:17:03.980Z",
+      "updatedAt": "2026-10-27T17:17:03.980Z"
+    }
+  ],
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": [
+        null
+      ],
+      "recurrenceRuleSignatures": [
+        null
+      ]
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2026-10-27T18:33:04.831Z",
+  "versionId": "408a7420-2fd8-4e58-9be0-3a3cbc2c7f62"
+}
