@@ -409,15 +409,15 @@
           "value": "={{ $('Edit Fields').item.json.repo.name }}",
           "mode": "name"
         },
-        "filePath": "={{ $('Edit Fields').item.json.repo.path }}{{ $('Get many workflows').item.json.name }}.json",
+        "filePath": "={{ $('Edit Fields').first().json.repo.path }}{{ $json.name.replace(/\\//g, '-') }}.json",
         "fileContent": "={{ $json.n8n_data_stringy }}",
         "commitMessage": "=N8N Backup  {{ $('Loop Over Items').item.json.name }}"
       },
       "type": "n8n-nodes-base.github",
       "typeVersion": 1.1,
       "position": [
-        -928,
-        -128
+        -816,
+        -224
       ],
       "id": "fc250927-3f5d-467e-a22b-d7ac9d940f2d",
       "name": "Create a file",
@@ -434,8 +434,8 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        -912,
-        64
+        -832,
+        16
       ],
       "id": "48b6718f-6723-4f06-a4c3-7b43a7517aea",
       "name": "No Operation, do nothing"
@@ -501,6 +501,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2026-11-12T16:59:08.094Z",
-  "versionId": "56aa87b4-fc66-4918-866e-c8288d1a2762"
+  "updatedAt": "2026-11-12T17:04:26.788Z",
+  "versionId": "52f3aeda-f083-48d3-a263-1fa7cb7246ef"
 }
