@@ -469,8 +469,8 @@
       "name": "isDiffOrNew1",
       "type": "n8n-nodes-base.code",
       "position": [
-        -1392,
-        -432
+        -1424,
+        -416
       ],
       "typeVersion": 1
     }
@@ -501,6 +501,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2026-11-12T17:27:05.656Z",
-  "versionId": "32f2cbd1-2f2c-4bb1-8aa9-f20ce76e65c2"
+  "updatedAt": "2026-11-12T17:28:49.919Z",
+  "versionId": "ed78c6b0-698b-480e-b676-9b591561e7bf"
 }
