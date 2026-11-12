@@ -1,0 +1,306 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Redis",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a text message1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "Redis": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-11-06T19:09:28.934Z",
+  "id": "lHPWf1ur1PFUVY9w",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Generador imagenes Telegram",
+  "nodeGroups": [],
+  "nodes": [
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.chatInput }}",
+                    "rightValue": "/start",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "ba3b3aba-9c1f-44f2-a927-db6606a37be6"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "menu"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "89ff337a-75ca-4949-86c2-8c7bf21d7552",
+                    "leftValue": "={{ $json.chatInput }}",
+                    "rightValue": "generar_imagen",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Generar Imagen"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "19a3fdac-52ab-41bf-8982-59ef874ec662",
+                    "leftValue": "={{ $json.chatInput }}",
+                    "rightValue": "modificar_imagen",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Modificar Imagen"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra",
+          "allMatchingOutputs": false
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        -1184,
+        -400
+      ],
+      "id": "c7b03697-1037-4621-b8de-1b7cf47c5013",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.5,
+      "position": [
+        -1648,
+        -368
+      ],
+      "id": "3989514d-1e0a-4d46-bc96-c9bd809f6be7",
+      "name": "When chat message received",
+      "webhookId": "13c09a9f-6dd1-4496-ab1a-c86f9c3b48fb"
+    },
+    {
+      "parameters": {
+        "chatId": "8474742624",
+        "text": "=👋🏽 Hola,\n\nEncantado de estar por acá, que te gustaría hacer ahora?",
+        "replyMarkup": "inlineKeyboard",
+        "inlineKeyboard": {
+          "rows": [
+            {
+              "row": {
+                "buttons": [
+                  {
+                    "text": "Generar Imagen",
+                    "additionalFields": {
+                      "callback_data": "generar_imagen"
+                    }
+                  },
+                  {
+                    "text": "Modificar Imagen",
+                    "additionalFields": {
+                      "callback_data": "modificar_imagen"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -880,
+        -592
+      ],
+      "id": "f226cac6-c306-46ae-aa6d-67fad368a6b1",
+      "name": "Send a text message",
+      "webhookId": "80c8e9eb-5e68-44f8-ba15-23b0386a9a3b",
+      "credentials": {
+        "telegramApi": {
+          "id": "dXvBnIVmG8dwZ6my",
+          "name": "GeneradorIMG_bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-3.1-flash-image-preview",
+          "mode": "list",
+          "cachedResultName": "Nano Banana 2 (Nano Banana 2)"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.2,
+      "position": [
+        -384,
+        -384
+      ],
+      "id": "3f39104d-f683-43d6-a89e-8d59ad477a23",
+      "name": "Generate an image",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "Pxt33LNklqCjfPDI",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "8474742624",
+        "text": "Buenísimo, decime que imagen querés y lo hacemos.",
+        "replyMarkup": "inlineKeyboard",
+        "inlineKeyboard": {
+          "rows": []
+        },
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -816,
+        -384
+      ],
+      "id": "e2f06718-732b-480e-9165-b049e3b8e832",
+      "name": "Send a text message1",
+      "webhookId": "80c8e9eb-5e68-44f8-ba15-23b0386a9a3b",
+      "credentials": {
+        "telegramApi": {
+          "id": "dXvBnIVmG8dwZ6my",
+          "name": "GeneradorIMG_bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "propertyName": "accion",
+        "key": "ultima_accion",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        -1376,
+        -368
+      ],
+      "id": "b311265d-08cb-41b5-b983-ea2ee86d2724",
+      "name": "Redis",
+      "credentials": {
+        "redis": {
+          "id": "j9z2XvGyeuWJFC7x",
+          "name": "Redis account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "shared": [
+    {
+      "role": "workflow:owner",
+      "workflowId": "lHPWf1ur1PFUVY9w",
+      "projectId": "n72aYZueYjK1JFSF",
+      "createdAt": "2026-11-06T19:09:28.935Z",
+      "updatedAt": "2026-11-06T19:09:28.935Z"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-11-11T16:29:37.544Z",
+  "versionId": "691bbb70-66ac-43c4-b111-c417d9f8689c"
+}
