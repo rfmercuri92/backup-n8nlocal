@@ -416,8 +416,8 @@
       "type": "n8n-nodes-base.github",
       "typeVersion": 1.1,
       "position": [
-        -816,
-        -224
+        -656,
+        -288
       ],
       "id": "fc250927-3f5d-467e-a22b-d7ac9d940f2d",
       "name": "Create a file",
@@ -501,6 +501,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2026-11-12T17:08:21.773Z",
-  "versionId": "f7dad62e-b8ca-459b-9e33-737fa3d4be60"
+  "updatedAt": "2026-11-12T17:11:53.026Z",
+  "versionId": "cf866d65-b348-41eb-9499-c68ac5650f76"
 }
