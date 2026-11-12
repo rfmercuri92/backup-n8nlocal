@@ -148,9 +148,6 @@
   "createdAt": "2026-11-11T16:42:21.405Z",
   "id": "22rZ71864KufKCal",
   "isArchived": false,
-  "meta": {
-    "templateCredsSetupCompleted": true
-  },
   "name": "BackUp Github",
   "nodeGroups": [],
   "nodes": [
@@ -284,7 +281,7 @@
       "id": "f3dbfd50-360d-45ee-9e12-36d6e59d8f1e",
       "name": "isDiffOrNew",
       "parameters": {
-        "jsCode": "const items = $input.all();\nlet githubItem = items[0] && items[0].json ? items[0].json : {};\nlet n8nItem = items[1] && items[1].json ? items[1].json : {};\n\n// Función recursiva para ordenar y limpiar campos dinámicos molestos si los hubiera\nfunction cleanAndSort(obj) {\n  if (obj === null || typeof obj !== 'object') {\n    return obj;\n  }\n  if (Array.isArray(obj)) {\n    return obj.map(cleanAndSort);\n  }\n  \n  const sortedKeys = Object.keys(obj).sort();\n  const result = {};\n  for (const key of sortedKeys) {\n    // Si querés ignorar alguna propiedad que n8n cambie sola, la podés filtrar acá:\n    // if (key === 'updatedAt' || key === 'versionId') continue;\n    \n    result[key] = cleanAndSort(obj[key]);\n  }\n  return result;\n}\n\nconst fileExistsOnGitHub = githubItem.sha && githubItem.sha.length > 0;\n\nif (fileExistsOnGitHub) {\n  try {\n    let decodedString = Buffer.from(githubItem.content, 'base64').toString('utf8');\n    var origWorkflow = JSON.parse(decodedString);\n    \n    var orderedOriginal = cleanAndSort(origWorkflow);\n    var orderedActual = cleanAndSort(n8nItem);\n\n    let stringOriginal = JSON.stringify(orderedOriginal);\n    let stringActual = JSON.stringify(orderedActual);\n\n    if (stringOriginal === stringActual) {\n      githubItem.github_status = \"same\";\n    } else {\n      githubItem.github_status = \"different\";\n      githubItem.n8n_data_stringy = JSON.stringify(orderedActual, null, 2);\n      \n      // ESTO ES CLAVE: Vamos a ver exactamente qué workflow es y un cacho de por qué difiere\n      console.log(\"Diferencia detectada en workflow:\", n8nItem.name);\n    }\n  } catch (e) {\n    githubItem.github_status = \"different\";\n    githubItem.n8n_data_stringy = JSON.stringify(n8nItem, null, 2);\n  }\n} else {\n  var orderedActual = cleanAndSort(n8nItem);\n  githubItem.github_status = \"new\";\n  githubItem.n8n_data_stringy = JSON.stringify(orderedActual, null, 2);\n}\n\nreturn [{ json: githubItem }];"
+        "jsCode": "const items = $input.all();\nlet githubItem = items[0] && items[0].json ? items[0].json : {};\nlet n8nItem = items[1] && items[1].json ? items[1].json : {};\n\nfunction cleanAndSort(obj) {\n  if (obj === null || typeof obj !== 'object') {\n    return obj;\n  }\n  if (Array.isArray(obj)) {\n    return obj.map(cleanAndSort);\n  }\n  \n  const sortedKeys = Object.keys(obj).sort();\n  const result = {};\n  for (const key of sortedKeys) {\n    // IGNORAMOS propiedades dinámicas típicas que n8n cambia solas\n    if (key === 'updatedAt' || key === 'versionId' || key === 'meta') continue;\n    \n    result[key] = cleanAndSort(obj[key]);\n  }\n  return result;\n}\n\nconst fileExistsOnGitHub = githubItem.sha && githubItem.sha.length > 0;\n\nif (fileExistsOnGitHub) {\n  try {\n    let decodedString = Buffer.from(githubItem.content, 'base64').toString('utf8');\n    var origWorkflow = JSON.parse(decodedString);\n    \n    var orderedOriginal = cleanAndSort(origWorkflow);\n    var orderedActual = cleanAndSort(n8nItem);\n\n    let stringOriginal = JSON.stringify(orderedOriginal);\n    let stringActual = JSON.stringify(orderedActual);\n\n    if (stringOriginal === stringActual) {\n      githubItem.github_status = \"same\";\n    } else {\n      githubItem.github_status = \"different\";\n      githubItem.n8n_data_stringy = JSON.stringify(orderedActual, null, 2);\n      \n      // LOG DESTRUCTIVO: Imprimimos qué workflow falló para cazarlo\n      console.log(\"DIFERENCIA REAL EN:\", n8nItem.name);\n    }\n  } catch (e) {\n    githubItem.github_status = \"different\";\n    githubItem.n8n_data_stringy = JSON.stringify(n8nItem, null, 2);\n  }\n} else {\n  var orderedActual = cleanAndSort(n8nItem);\n  githubItem.github_status = \"new\";\n  githubItem.n8n_data_stringy = JSON.stringify(orderedActual, null, 2);\n}\n\nreturn [{ json: githubItem }];"
       },
       "position": [
         -1424,
@@ -494,13 +491,10 @@
       "createdAt": "2026-11-11T16:42:21.407Z",
       "projectId": "n72aYZueYjK1JFSF",
       "role": "workflow:owner",
-      "updatedAt": "2026-11-11T16:42:21.407Z",
       "workflowId": "22rZ71864KufKCal"
     }
   ],
   "staticData": null,
   "tags": [],
-  "triggerCount": 0,
-  "updatedAt": "2026-11-12T17:23:14.548Z",
-  "versionId": "02e44a06-b2b1-4cbd-ac38-caaf74d14018"
+  "triggerCount": 0
 }
