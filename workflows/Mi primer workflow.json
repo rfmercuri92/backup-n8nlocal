@@ -1,0 +1,207 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Insert row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insert row": {
+      "main": [
+        [
+          {
+            "node": "Variables",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-10-15T20:51:37.873Z",
+  "id": "1FFRJJvruryzZCvS",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Mi primer workflow",
+  "nodeGroups": [],
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Prueba",
+        "formDescription": "Clase triggers",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Nombre"
+            },
+            {
+              "fieldLabel": "Apellido"
+            },
+            {
+              "fieldLabel": "Email",
+              "fieldType": "email"
+            },
+            {
+              "fieldLabel": "Teléfono",
+              "fieldType": "number"
+            }
+          ]
+        },
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.6,
+      "position": [
+        -128,
+        -592
+      ],
+      "id": "cc6f02f5-6a99-43ec-a300-43201c478e9c",
+      "name": "On form submission",
+      "webhookId": "745db779-2563-4cea-88a0-5cdaecb96ca5"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3c8c1223-6c2b-4098-ad22-5965bcbef3e6",
+              "name": "nombre_completo",
+              "value": "={{ $('Insert row').item.json.nombre }}{{ $('Insert row').item.json.apellido }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        320,
+        -592
+      ],
+      "id": "a2f72dd2-c2a1-4d0b-a9b7-402343de3243",
+      "name": "Variables"
+    },
+    {
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "value": "987Fad1X9ILCM6rR",
+          "mode": "list",
+          "cachedResultName": "Formularios_leads",
+          "cachedResultUrl": "/projects/n72aYZueYjK1JFSF/datatables/987Fad1X9ILCM6rR"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "nombre": "={{ $json.Nombre }}",
+            "apellido": "={{ $json.Apellido }}",
+            "email": "={{ $json.Email }}",
+            "telefono": "={{ $json['Teléfono'] }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "nombre",
+              "displayName": "nombre",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "apellido",
+              "displayName": "apellido",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "telefono",
+              "displayName": "telefono",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        96,
+        -592
+      ],
+      "id": "5ee32f44-a5e9-4f6c-a76b-76d91b810d22",
+      "name": "Insert row"
+    }
+  ],
+  "pinData": {
+    "On form submission": [
+      {
+        "json": {
+          "Nombre": "ROBERTO",
+          "Apellido": "MERCURI",
+          "Email": "rfmercuri92@gmail.com",
+          "Teléfono": 491703638,
+          "submittedAt": "2026-10-18T21:12:58.449-04:00",
+          "formMode": "test"
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ]
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "shared": [
+    {
+      "role": "workflow:owner",
+      "workflowId": "1FFRJJvruryzZCvS",
+      "projectId": "n72aYZueYjK1JFSF",
+      "createdAt": "2026-10-15T20:51:37.875Z",
+      "updatedAt": "2026-10-15T20:51:37.875Z"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-11-12T16:28:21.125Z",
+  "versionId": "dd219602-1292-4961-9dca-8061940d9312"
+}
