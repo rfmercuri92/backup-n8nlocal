@@ -1,0 +1,209 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Msj Insta": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-11-05T14:49:54.193Z",
+  "id": "xM0rS9Mjm3J5obVy",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Manychat",
+  "nodeGroups": [],
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "mensajemanychat",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.2,
+      "position": [
+        -800,
+        96
+      ],
+      "id": "7b35baed-86e6-42db-a557-27345db87e10",
+      "name": "Msj Insta",
+      "webhookId": "7589b09b-a85a-46c6-ac4e-583b7a24c866"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        -224,
+        0
+      ],
+      "id": "79a53619-30c0-473c-b9e9-e540e7924d85",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "Sos asistente virtual de Jesi en su negocio de indumentaria deportiva de mujer llamado Thale. Envias mensajes cortos de respuesta al usuario. El usuario te enviará su nombre y un mensaje.\n\nTu objetivo es resolver las posibles dudas que tenga el usuario siendo cercano, sincero y honesto.\nActúa como si fueras Jesi y no como si fueras una IA.\n\nInventate los precios y los productos."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -576,
+        0
+      ],
+      "id": "b9c1104a-ccd5-461e-a809-19295a3acb7a",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $workflow.id }}",
+        "contextWindowLength": 25
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        -432,
+        240
+      ],
+      "id": "2f2a1aeb-db66-4a34-999f-6998eaaf2396",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "options": {
+          "temperature": 0.4,
+          "topK": 32,
+          "topP": 1
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.2,
+      "position": [
+        -576,
+        240
+      ],
+      "id": "d72ce61d-8f5f-4fa1-a479-2d00f3c9a144",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "Pxt33LNklqCjfPDI",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.5,
+      "position": [
+        -800,
+        -96
+      ],
+      "id": "f39a4cad-91e3-4f56-be14-4627194a506a",
+      "name": "When chat message received",
+      "webhookId": "93be15be-3454-4263-9c10-5117bf7cf7f5"
+    }
+  ],
+  "pinData": {
+    "Msj Insta": [
+      {
+        "json": {
+          "headers": {
+            "content-type": "application/json"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "nombre": "Lucía Gomez",
+            "nombre_usuario": "lucia.gomez88",
+            "mensaje": "Hola! Quería saber cuánto sale el top y la calsa que subieron de la nueva temporada",
+            "primer_nombre": "Lucía",
+            "apellido": "Gomez"
+          },
+          "webhookUrl": "http://localhost:5678/webhook-test/mensaje-manychat",
+          "executionMode": "test"
+        }
+      }
+    ]
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "shared": [
+    {
+      "role": "workflow:owner",
+      "workflowId": "xM0rS9Mjm3J5obVy",
+      "projectId": "n72aYZueYjK1JFSF",
+      "createdAt": "2026-11-05T14:49:54.195Z",
+      "updatedAt": "2026-11-05T14:49:54.195Z"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-11-05T15:43:18.812Z",
+  "versionId": "0bb96634-f5fa-450d-a788-557e981845f0"
+}
