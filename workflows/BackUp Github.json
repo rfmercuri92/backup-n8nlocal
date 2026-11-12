@@ -146,42 +146,57 @@
     }
   },
   "createdAt": "2026-11-11T16:42:21.405Z",
-  "id": "22rZ71864KufKCal",
   "isArchived": false,
   "name": "BackUp Github",
   "nodeGroups": [],
   "nodes": [
     {
-      "id": "53918507-9468-45fd-b228-60eca7ead502",
-      "name": "When clicking ‘Execute workflow’",
-      "parameters": {},
+      "credentials": {
+        "githubApi": {
+          "name": "GitHub account"
+        }
+      },
+      "name": "Create a file",
+      "parameters": {
+        "commitMessage": "=N8N Backup  {{ $('Loop Over Items').item.json.name }}",
+        "fileContent": "={{ $json.n8n_data_stringy }}",
+        "filePath": "={{ $('Edit Fields').first().json.repo.path }}{{ $json.name.replace(/\\//g, '-') }}.json",
+        "owner": {
+          "__rl": true,
+          "mode": "name",
+          "value": "={{ $('Edit Fields').item.json.repo.owner }}"
+        },
+        "repository": {
+          "__rl": true,
+          "mode": "name",
+          "value": "={{ $('Edit Fields').item.json.repo.name }}"
+        },
+        "resource": "file"
+      },
       "position": [
-        -2768,
-        -144
+        -944,
+        -400
       ],
-      "type": "n8n-nodes-base.manualTrigger",
-      "typeVersion": 1
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1.1,
+      "webhookId": "46a6396e-3c01-45b5-8c66-49cb3c45ed6e"
     },
     {
-      "id": "d9953f97-650d-4fe2-904f-dd338362e32f",
       "name": "Edit Fields",
       "parameters": {
         "assignments": {
           "assignments": [
             {
-              "id": "143268d7-ac6c-4224-ac31-882ba33a1c4c",
-              "name": "repo.owner",
-              "type": "string",
-              "value": "rfmercuri92"
-            },
-            {
-              "id": "ef89c7f4-ffd8-4236-8354-56a6f4eabaa0",
               "name": "repo.name",
               "type": "string",
               "value": "backup-n8nlocal"
             },
             {
-              "id": "355e566b-28d5-41a2-88ef-1ec86cf013f6",
+              "name": "repo.owner",
+              "type": "string",
+              "value": "rfmercuri92"
+            },
+            {
               "name": "repo.path",
               "type": "string",
               "value": "workflows/"
@@ -199,46 +214,43 @@
     },
     {
       "credentials": {
-        "n8nApi": {
-          "id": "ke34qEXouFSHtjfz",
-          "name": "n8n account"
+        "githubApi": {
+          "name": "GitHub account"
         }
       },
-      "id": "f42f171a-2088-4bad-9ead-adc283238993",
-      "name": "Get many workflows",
+      "name": "Edit a file",
       "parameters": {
-        "filters": {},
-        "requestOptions": {}
+        "commitMessage": "=N8N Backup  {{ $('Loop Over Items').item.json.name }}",
+        "fileContent": "={{ $json.n8n_data_stringy }}",
+        "filePath": "={{ $('Edit Fields').item.json.repo.path }}{{ $('Loop Over Items').item.json.name }}.json",
+        "operation": "edit",
+        "owner": {
+          "__rl": true,
+          "mode": "name",
+          "value": "={{ $('Edit Fields').item.json.repo.owner }}"
+        },
+        "repository": {
+          "__rl": true,
+          "mode": "name",
+          "value": "={{ $('Edit Fields').item.json.repo.name }}"
+        },
+        "resource": "file"
       },
       "position": [
-        -2320,
-        -144
+        -976,
+        0
       ],
-      "type": "n8n-nodes-base.n8n",
-      "typeVersion": 1
-    },
-    {
-      "id": "a2036d15-e180-41f7-b15d-5365dc0dba0c",
-      "name": "Loop Over Items",
-      "parameters": {
-        "options": {}
-      },
-      "position": [
-        -2096,
-        -144
-      ],
-      "type": "n8n-nodes-base.splitInBatches",
-      "typeVersion": 3
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1.1,
+      "webhookId": "374c2589-2368-4fc3-a261-0506f69133c9"
     },
     {
       "alwaysOutputData": true,
       "credentials": {
         "githubApi": {
-          "id": "RwkWdY07WCSEackY",
           "name": "GitHub account"
         }
       },
-      "id": "f19dde17-8606-4e86-bdec-055310d6bc1b",
       "name": "Get a file",
       "onError": "continueRegularOutput",
       "parameters": {
@@ -267,7 +279,36 @@
       "webhookId": "54cd8525-a631-4da7-9a9f-dfae402653dc"
     },
     {
-      "id": "fcc5135d-866f-4ded-8116-712dd1d71ea9",
+      "credentials": {
+        "n8nApi": {
+          "name": "n8n account"
+        }
+      },
+      "name": "Get many workflows",
+      "parameters": {
+        "filters": {},
+        "requestOptions": {}
+      },
+      "position": [
+        -2320,
+        -144
+      ],
+      "type": "n8n-nodes-base.n8n",
+      "typeVersion": 1
+    },
+    {
+      "name": "Loop Over Items",
+      "parameters": {
+        "options": {}
+      },
+      "position": [
+        -2096,
+        -144
+      ],
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3
+    },
+    {
       "name": "Merge",
       "parameters": {},
       "position": [
@@ -278,20 +319,16 @@
       "typeVersion": 3.2
     },
     {
-      "id": "f3dbfd50-360d-45ee-9e12-36d6e59d8f1e",
-      "name": "isDiffOrNew",
-      "parameters": {
-        "jsCode": "const items = $input.all();\nlet githubItem = items[0] && items[0].json ? items[0].json : {};\nlet n8nItem = items[1] && items[1].json ? items[1].json : {};\n\nfunction cleanAndSort(obj) {\n  if (obj === null || typeof obj !== 'object') {\n    return obj;\n  }\n  if (Array.isArray(obj)) {\n    return obj.map(cleanAndSort);\n  }\n  \n  const sortedKeys = Object.keys(obj).sort();\n  const result = {};\n  for (const key of sortedKeys) {\n    // IGNORAMOS propiedades dinámicas típicas que n8n cambia solas\n    if (key === 'updatedAt' || key === 'versionId' || key === 'meta') continue;\n    \n    result[key] = cleanAndSort(obj[key]);\n  }\n  return result;\n}\n\nconst fileExistsOnGitHub = githubItem.sha && githubItem.sha.length > 0;\n\nif (fileExistsOnGitHub) {\n  try {\n    let decodedString = Buffer.from(githubItem.content, 'base64').toString('utf8');\n    var origWorkflow = JSON.parse(decodedString);\n    \n    var orderedOriginal = cleanAndSort(origWorkflow);\n    var orderedActual = cleanAndSort(n8nItem);\n\n    let stringOriginal = JSON.stringify(orderedOriginal);\n    let stringActual = JSON.stringify(orderedActual);\n\n    if (stringOriginal === stringActual) {\n      githubItem.github_status = \"same\";\n    } else {\n      githubItem.github_status = \"different\";\n      githubItem.n8n_data_stringy = JSON.stringify(orderedActual, null, 2);\n      \n      // LOG DESTRUCTIVO: Imprimimos qué workflow falló para cazarlo\n      console.log(\"DIFERENCIA REAL EN:\", n8nItem.name);\n    }\n  } catch (e) {\n    githubItem.github_status = \"different\";\n    githubItem.n8n_data_stringy = JSON.stringify(n8nItem, null, 2);\n  }\n} else {\n  var orderedActual = cleanAndSort(n8nItem);\n  githubItem.github_status = \"new\";\n  githubItem.n8n_data_stringy = JSON.stringify(orderedActual, null, 2);\n}\n\nreturn [{ json: githubItem }];"
-      },
+      "name": "No Operation, do nothing",
+      "parameters": {},
       "position": [
-        -1424,
-        -416
+        -912,
+        -208
       ],
-      "type": "n8n-nodes-base.code",
+      "type": "n8n-nodes-base.noOp",
       "typeVersion": 1
     },
     {
-      "id": "9fad07dc-663f-42b9-9464-3b58c0063bd1",
       "name": "Sticky Note",
       "parameters": {
         "content": "Merge & Code: Unimos lo que hay en GitHub con lo que hay en N8N y usamos un pequeño script de JavaScript para comparar si hubo cambios. El nodo de Código devolverá tres posibles estados: new (nuevo), same (igual) o different (modificado).",
@@ -305,7 +342,6 @@
       "typeVersion": 1
     },
     {
-      "id": "da6aeb4c-1567-415e-838d-cbf226adc84a",
       "name": "Switch",
       "parameters": {
         "options": {},
@@ -316,7 +352,6 @@
                 "combinator": "and",
                 "conditions": [
                   {
-                    "id": "48d342fd-dde9-4d3e-a823-12115237f3d0",
                     "leftValue": "={{ $json.github_status }}",
                     "operator": {
                       "operation": "equals",
@@ -340,7 +375,6 @@
                 "combinator": "and",
                 "conditions": [
                   {
-                    "id": "15407c72-b25b-43c2-9ca4-7afdf8d699ea",
                     "leftValue": "={{ $json.github_status }}",
                     "operator": {
                       "operation": "equals",
@@ -364,7 +398,6 @@
                 "combinator": "and",
                 "conditions": [
                   {
-                    "id": "3a07607f-6b4f-4f3d-bb7e-2cb446b0bef2",
                     "leftValue": "={{ $json.github_status }}",
                     "operator": {
                       "operation": "equals",
@@ -394,82 +427,26 @@
       "typeVersion": 3.4
     },
     {
-      "credentials": {
-        "githubApi": {
-          "id": "RwkWdY07WCSEackY",
-          "name": "GitHub account"
-        }
-      },
-      "id": "fc250927-3f5d-467e-a22b-d7ac9d940f2d",
-      "name": "Create a file",
-      "parameters": {
-        "commitMessage": "=N8N Backup  {{ $('Loop Over Items').item.json.name }}",
-        "fileContent": "={{ $json.n8n_data_stringy }}",
-        "filePath": "={{ $('Edit Fields').first().json.repo.path }}{{ $json.name.replace(/\\//g, '-') }}.json",
-        "owner": {
-          "__rl": true,
-          "mode": "name",
-          "value": "={{ $('Edit Fields').item.json.repo.owner }}"
-        },
-        "repository": {
-          "__rl": true,
-          "mode": "name",
-          "value": "={{ $('Edit Fields').item.json.repo.name }}"
-        },
-        "resource": "file"
-      },
-      "position": [
-        -944,
-        -400
-      ],
-      "type": "n8n-nodes-base.github",
-      "typeVersion": 1.1,
-      "webhookId": "46a6396e-3c01-45b5-8c66-49cb3c45ed6e"
-    },
-    {
-      "id": "48b6718f-6723-4f06-a4c3-7b43a7517aea",
-      "name": "No Operation, do nothing",
+      "name": "When clicking ‘Execute workflow’",
       "parameters": {},
       "position": [
-        -912,
-        -208
+        -2768,
+        -144
       ],
-      "type": "n8n-nodes-base.noOp",
+      "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1
     },
     {
-      "credentials": {
-        "githubApi": {
-          "id": "RwkWdY07WCSEackY",
-          "name": "GitHub account"
-        }
-      },
-      "id": "9f6c45a4-43d5-4232-80ca-b42c2ae76b2c",
-      "name": "Edit a file",
+      "name": "isDiffOrNew",
       "parameters": {
-        "commitMessage": "=N8N Backup  {{ $('Loop Over Items').item.json.name }}",
-        "fileContent": "={{ $json.n8n_data_stringy }}",
-        "filePath": "={{ $('Edit Fields').item.json.repo.path }}{{ $('Loop Over Items').item.json.name }}.json",
-        "operation": "edit",
-        "owner": {
-          "__rl": true,
-          "mode": "name",
-          "value": "={{ $('Edit Fields').item.json.repo.owner }}"
-        },
-        "repository": {
-          "__rl": true,
-          "mode": "name",
-          "value": "={{ $('Edit Fields').item.json.repo.name }}"
-        },
-        "resource": "file"
+        "jsCode": "const items = $input.all();\nlet githubItem = items[0] && items[0].json ? items[0].json : {};\nlet n8nItem = items[1] && items[1].json ? items[1].json : {};\n\nfunction cleanAndSort(obj) {\n  if (obj === null || typeof obj !== 'object') {\n    return obj;\n  }\n  if (Array.isArray(obj)) {\n    // Limpiamos cada elemento del array\n    let mapped = obj.map(cleanAndSort);\n    // Si el array tiene objetos con la propiedad 'name' (como los nodos de n8n), los ordenamos por nombre\n    if (mapped.length > 0 && typeof mapped[0] === 'object' && mapped[0] !== null && 'name' in mapped[0]) {\n      mapped.sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));\n    }\n    return mapped;\n  }\n  \n  const sortedKeys = Object.keys(obj).sort();\n  const result = {};\n  for (const key of sortedKeys) {\n    // Filtramos campos dinámicos que n8n pueda cambiar solos\n    if (key === 'updatedAt' || key === 'versionId' || key === 'meta' || key === 'id') continue;\n    \n    result[key] = cleanAndSort(obj[key]);\n  }\n  return result;\n}\n\nconst fileExistsOnGitHub = githubItem.sha && githubItem.sha.length > 0;\n\nif (fileExistsOnGitHub) {\n  try {\n    let decodedString = Buffer.from(githubItem.content, 'base64').toString('utf8');\n    var origWorkflow = JSON.parse(decodedString);\n    \n    var orderedOriginal = cleanAndSort(origWorkflow);\n    var orderedActual = cleanAndSort(n8nItem);\n\n    let stringOriginal = JSON.stringify(orderedOriginal);\n    let stringActual = JSON.stringify(orderedActual);\n\n    if (stringOriginal === stringActual) {\n      githubItem.github_status = \"same\";\n    } else {\n      githubItem.github_status = \"different\";\n      githubItem.n8n_data_stringy = JSON.stringify(orderedActual, null, 2);\n    }\n  } catch (e) {\n    githubItem.github_status = \"different\";\n    githubItem.n8n_data_stringy = JSON.stringify(orderedActual, null, 2);\n  }\n} else {\n  var orderedActual = cleanAndSort(n8nItem);\n  githubItem.github_status = \"new\";\n  githubItem.n8n_data_stringy = JSON.stringify(orderedActual, null, 2);\n}\n\nreturn [{ json: githubItem }];"
       },
       "position": [
-        -976,
-        0
+        -1424,
+        -416
       ],
-      "type": "n8n-nodes-base.github",
-      "typeVersion": 1.1,
-      "webhookId": "374c2589-2368-4fc3-a261-0506f69133c9"
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1
     }
   ],
   "pinData": {
