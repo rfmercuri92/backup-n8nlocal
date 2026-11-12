@@ -1,0 +1,230 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "RSS Read",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RSS Read": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        []
+      ]
+    },
+    "Switch": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "createdAt": "2026-10-22T17:32:58.358Z",
+  "id": "B6rps7iSPi8bZF98",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Flow IF SWITCH",
+  "nodeGroups": [],
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -2320,
+        -832
+      ],
+      "id": "e2d17e22-f481-45bb-b4fe-3212dd5485f4",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "url": "https://techcrunch.com/feed",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        -2096,
+        -832
+      ],
+      "id": "8edd2230-7ae0-4f12-96c0-63850ad1e8a9",
+      "name": "RSS Read"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "b6aa08ff-5362-431a-bdc9-426ad98217eb",
+              "leftValue": "={{ $json.title }}",
+              "rightValue": "Elon",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -1872,
+        -944
+      ],
+      "id": "56e26a97-d773-4003-a2b7-1c223164751c",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.creator }}",
+                    "rightValue": "Zack Whittaker",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "b45da5db-1855-4c82-8e7d-4d01f6c98aff"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Zack Whittaker"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "62d24d53-f6be-4c69-9f17-5f04a5eaa906",
+                    "leftValue": "={{ $json.creator }}",
+                    "rightValue": "=Lucas Ropek",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Lucas Ropek"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra"
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        -1872,
+        -752
+      ],
+      "id": "383832f9-66da-40d3-b503-9abe73d30cda",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "content": "## Nodo IF (Sí/No)\nEvalúa si una condición es Verdadera (True) o Falsa (False) y divide el flujo en dos caminos.\n\nCondiciones: Puedes comparar textos (es igual a, contiene, empieza por), números (mayor que, menor que), fechas o existencia de datos (está vacío).\n\n### Lógica AND vs. OR:\n* AND: Todas las condiciones deben cumplirse para que sea True (ej. “Autor es Ana” Y “Fecha es Hoy”).\n* OR: Basta con que una condición se cumpla (ej. “Autor es Ana” O “Autor es Juan”).\n\n### Estrategia de Uso\nUsa IF para validaciones simples o filtros de paso (ej. “¿Tiene email? Sí/No”)\n",
+        "height": 256,
+        "width": 768,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -2112,
+        -1232
+      ],
+      "id": "f306d1e2-2bb9-461d-8c51-dc60f7e0eed3",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## Nodo Switch (Múltiples Caminos)\nA diferencia del IF (que solo tiene 2 salidas), el Switch permite crear rutas ilimitadas basadas en reglas.\n\n### Funcionamiento: Defines reglas de enrutamiento.\n* Ruta 1: Si el “Autor” es “Ana” →→ Salida 1.\n* Ruta 2: Si el “Autor” es “Tim” →→ Salida 2.\n* Ruta 3: Si el “Contenido” incluye “AI” →→ Salida 3.\n\nFallback Output: Es una salida de seguridad opcional. Si un dato no cumple ninguna de las reglas anteriores, se envía por este camino “por defecto” (útil para capturar errores o casos no previstos).\n\n### Estrategia de Uso\nUsa Switch para distribuir tareas complejas (ej. “Si el lead viene de Facebook →→ Manda a Ventas; si viene de Blog →→ Manda a Newsletter; si viene de Soporte →→ Manda a Jira”).\n",
+        "height": 320,
+        "width": 736,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -2096,
+        -560
+      ],
+      "id": "595293ac-76e7-473e-ba05-f3c0f59fdb82",
+      "name": "Sticky Note1"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "shared": [
+    {
+      "role": "workflow:owner",
+      "workflowId": "B6rps7iSPi8bZF98",
+      "projectId": "n72aYZueYjK1JFSF",
+      "createdAt": "2026-10-22T17:32:58.359Z",
+      "updatedAt": "2026-10-22T17:32:58.359Z"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-11-12T16:40:52.912Z",
+  "versionId": "f98334f0-8a0d-4bdb-8e55-f63a8136ba1b"
+}
