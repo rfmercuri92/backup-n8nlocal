@@ -1,0 +1,248 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "RSS Read",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Replace Me",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RSS Read": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Replace Me": {
+      "main": [
+        [
+          {
+            "node": "Insert row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insert row": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a text message": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-10-27T16:14:08.961Z",
+  "id": "fFOEcjVSAhtFEtUg",
+  "isArchived": false,
+  "meta": null,
+  "name": "Loop Over Items",
+  "nodeGroups": [],
+  "nodes": [
+    {
+      "parameters": {
+        "url": "https://techcrunch.com/feed",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        -1184,
+        -288
+      ],
+      "id": "92110ea1-9ce5-4736-9ffe-e0b0746fc249",
+      "name": "RSS Read"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1408,
+        -288
+      ],
+      "id": "0d17f17c-eb4d-4fb3-8ddf-83149f17c74f",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -960,
+        -288
+      ],
+      "id": "d5ce2e7f-dbac-4a22-af9a-3a1f48ebd91b",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -736,
+        -480
+      ],
+      "id": "92aabc65-2f09-45c8-a7bf-520786c2e8a5",
+      "name": "No Operation, do nothing"
+    },
+    {
+      "parameters": {
+        "content": "🚨 El Problema de la Multiplicación\n\nSi recibes 20 noticias de un RSS y las conectas directamente a una API (ej. OpenAI), N8N intentará ejecutar las 20 peticiones casi simultáneamente o en bloque. Esto puede:\n\nColapsar la API: Por superar el límite de peticiones por segundo (Rate Limit).\nColapsar tu Servidor: Por consumo excesivo de memoria RAM.\n\nEste nodo coge los 20 ítems y los procesa uno a uno (o en pequeños lotes/batch de 5 en 5).\n\nConfiguración:\n\nBatch Size: Recomendado empezar en 1. Procesa un ítem, termina, y pasa al siguiente.\nReset: Opción para reiniciar el bucle (generalmente se deja por defecto).\n\nConclusión: Usa siempre el Loop cuando tengas que procesar listas (noticias, filas de Excel, usuarios). Garantiza estabilidad y control total sobre el proceso.",
+        "height": 272,
+        "width": 736
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1536,
+        -800
+      ],
+      "id": "be55014a-247f-44d8-85ba-fc12966c876f",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "name": "Replace Me",
+      "typeVersion": 1,
+      "position": [
+        -736,
+        -288
+      ],
+      "id": "d3afb0b4-f3f7-4bfa-83fa-f4c7f2e69134",
+      "placeholder": true
+    },
+    {
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        -512,
+        -288
+      ],
+      "id": "5e92437f-861b-4ef9-b591-d2382d868999",
+      "name": "Insert row"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        -288,
+        -288
+      ],
+      "id": "74431326-031a-48da-983c-0e1bbe24c621",
+      "name": "Send a message",
+      "webhookId": "50799464-677c-42bb-b8df-86bee43e0d28"
+    },
+    {
+      "parameters": {
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -64,
+        -208
+      ],
+      "id": "56b3389d-dd4b-4736-8f8d-87812dee300e",
+      "name": "Send a text message",
+      "webhookId": "9a340b79-372f-4b08-bbd3-7db9dcb6530e"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "shared": [
+    {
+      "role": "workflow:owner",
+      "workflowId": "fFOEcjVSAhtFEtUg",
+      "projectId": "n72aYZueYjK1JFSF",
+      "createdAt": "2026-10-27T16:14:08.963Z",
+      "updatedAt": "2026-10-27T16:14:08.963Z"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-10-27T17:03:42.028Z",
+  "versionId": "589e952a-ead0-4460-ac63-3af0f1307fdd"
+}
