@@ -1,0 +1,387 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet in Google Sheets": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Send a text message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-10-30T14:52:56.338Z",
+  "id": "i4Xmd4v9SwaXoVF2",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "IA",
+  "nodeGroups": [],
+  "nodes": [
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "models/gemini-3-flash-preview"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "={{ $json.chatInput }}"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {
+          "systemMessage": "Elabora del mensaje del usuario, un post para linkdin que sea controvertivo y genere interacción con los usuarios para que dejen comentarios y likes. Que la publicacion no sea extensa."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.2,
+      "position": [
+        -1424,
+        -560
+      ],
+      "id": "2b5fd8b6-7659-454c-9a49-bfc1a271b84d",
+      "name": "Message a model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "Pxt33LNklqCjfPDI",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.5,
+      "position": [
+        -1424,
+        -304
+      ],
+      "id": "6458cce3-919d-4461-b2bb-c6e7ab43ffdc",
+      "name": "When chat message received",
+      "webhookId": "8e6e72d9-fe9b-4420-b363-04da31690406"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1Abq8Dq0OoXbGuVUEBeP8-cGCHa6Xm1A-0Z4xQvy0JZ8",
+          "mode": "list",
+          "cachedResultName": "Post de Linkedin (test n8n)",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Abq8Dq0OoXbGuVUEBeP8-cGCHa6Xm1A-0Z4xQvy0JZ8/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Hoja 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Abq8Dq0OoXbGuVUEBeP8-cGCHa6Xm1A-0Z4xQvy0JZ8/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Petición ": "={{ $('When chat message received').item.json.chatInput }}",
+            "Resultado": "={{ $json.content.parts[0].text }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Petición ",
+              "displayName": "Petición ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Resultado",
+              "displayName": "Resultado",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -1072,
+        -560
+      ],
+      "id": "059981b8-d31d-4dcc-8cdd-fa4ce3d20962",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "BOteduLoUJyYYq66",
+          "name": "Sheets"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "chatId": "8474742624",
+        "text": "={{ $('Message a model').item.json.content.parts[0].text }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -848,
+        -560
+      ],
+      "id": "45b42160-f095-47aa-a813-c6e007b8e80e",
+      "name": "Send a text message",
+      "webhookId": "92e977eb-1531-4e29-807a-9ee0f342b730",
+      "credentials": {
+        "telegramApi": {
+          "id": "F9b2DQ5ex6So0vNe",
+          "name": "N8Nrobotrone_bot"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "Actua como un asistente virtual capaz de llevar a cabo las tareas que te solicita el usuario.\n\n** Tarea: post Linkedin**\nElabora un post para linkdin que sea controvertivo y genere interacción con los usuarios para que dejen comentarios y likes. Que la publicacion no sea extensa. y responde directamente con una publicación.\n\n** Tarea: post en sheet **\nSi el usuario te lo pide guarda en google sheets la información usando la tool adecuada.\n\nResponde con mensajes cortos sin caracteres raros ni markdown."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -1200,
+        -304
+      ],
+      "id": "8a1bb082-c57c-40f2-be4f-6561404a292c",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.2,
+      "position": [
+        -1344,
+        -96
+      ],
+      "id": "6ea47fd8-dda6-42da-be44-d1dde7551ca2",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "Pxt33LNklqCjfPDI",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1Abq8Dq0OoXbGuVUEBeP8-cGCHa6Xm1A-0Z4xQvy0JZ8",
+          "mode": "list",
+          "cachedResultName": "Post de Linkedin (test n8n)",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Abq8Dq0OoXbGuVUEBeP8-cGCHa6Xm1A-0Z4xQvy0JZ8/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Hoja 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Abq8Dq0OoXbGuVUEBeP8-cGCHa6Xm1A-0Z4xQvy0JZ8/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Petición ": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Petici_n_', ``, 'string') }}",
+            "Resultado": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Resultado', ``, 'string') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Petición ",
+              "displayName": "Petición ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Resultado",
+              "displayName": "Resultado",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        -992,
+        -80
+      ],
+      "id": "48f12c1f-5b04-402d-a8c1-bc0d78405480",
+      "name": "Append row in sheet in Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "BOteduLoUJyYYq66",
+          "name": "Sheets"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "8474742624",
+        "text": "={{ $json.output }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -832,
+        -304
+      ],
+      "id": "195b8518-e163-4faf-b252-bbb564084a1f",
+      "name": "Send a text message1",
+      "webhookId": "d51ea4dc-bfa7-41cf-bf6f-fb3ffa1766be",
+      "credentials": {
+        "telegramApi": {
+          "id": "F9b2DQ5ex6So0vNe",
+          "name": "N8Nrobotrone_bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 15
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        -1200,
+        -96
+      ],
+      "id": "92ca10ac-5021-4127-9c57-b77cc5588010",
+      "name": "Simple Memory"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "shared": [
+    {
+      "role": "workflow:owner",
+      "workflowId": "i4Xmd4v9SwaXoVF2",
+      "projectId": "n72aYZueYjK1JFSF",
+      "createdAt": "2026-10-30T14:52:56.339Z",
+      "updatedAt": "2026-10-30T14:52:56.339Z"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2026-11-01T15:09:28.967Z",
+  "versionId": "7754321f-a55e-42a5-935e-161df3535c55"
+}
