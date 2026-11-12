@@ -1,0 +1,1294 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "RSS Read",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "RSS Read1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RSS Read": {
+      "main": [
+        [
+          {
+            "node": "Date & Time",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Filter",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Date & Time": {
+      "main": [
+        [
+          {
+            "node": "Date & Time1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Date & Time1": {
+      "main": [
+        []
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RSS Read1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Rename Keys",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Sort",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-10-21T22:19:35.076Z",
+  "id": "DrjQK3VTTmTnIJTm",
+  "isArchived": false,
+  "meta": null,
+  "name": "Data Transformation",
+  "nodeGroups": [],
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -976,
+        -640
+      ],
+      "id": "3db4a3c4-9fde-430b-af93-3b4e1dd3663f",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "url": "https://techcrunch.com/feed",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        -752,
+        -640
+      ],
+      "id": "80c39c8e-ce85-4a20-84e8-c202f15a7afc",
+      "name": "RSS Read"
+    },
+    {
+      "parameters": {
+        "operation": "addToDate",
+        "magnitude": "={{ $json.pubDate }}",
+        "timeUnit": "years",
+        "duration": 1,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dateTime",
+      "typeVersion": 2,
+      "position": [
+        -528,
+        -640
+      ],
+      "id": "5881144f-9dbc-4538-864b-27a04d824576",
+      "name": "Date & Time"
+    },
+    {
+      "parameters": {
+        "operation": "formatDate",
+        "date": "={{ $json.newDate }}",
+        "format": "custom",
+        "customFormat": "DDDD",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dateTime",
+      "typeVersion": 2,
+      "position": [
+        -320,
+        -640
+      ],
+      "id": "00ac3b2a-ae1a-447d-b112-95e2e57bd285",
+      "name": "Date & Time1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7c840d03-320f-4362-8ba3-f55651bf50b7",
+              "name": "title",
+              "value": "={{ $json.title }}",
+              "type": "string"
+            },
+            {
+              "id": "ddace9e5-170f-4961-a211-27c55c09e0d1",
+              "name": "creator",
+              "value": "={{ $json.creator }}",
+              "type": "string"
+            },
+            {
+              "id": "e3dbf183-d45a-4eb5-ae49-72b8c1ecc771",
+              "name": "content",
+              "value": "={{ $json.content }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        -528,
+        -480
+      ],
+      "id": "a11bebfd-1e11-4755-a7a6-f853fe8bd878",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "604eb9b1-70e1-427a-a23d-e560a840954f",
+              "leftValue": "={{ $json.content }}",
+              "rightValue": "AI",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            },
+            {
+              "id": "01644eec-49ad-48fe-845c-0733af0a6449",
+              "leftValue": "={{ $json.creator }}",
+              "rightValue": "Lauren Forristal",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.3,
+      "position": [
+        -528,
+        -288
+      ],
+      "id": "047c931b-feba-4594-9671-2545978e4eaf",
+      "name": "Filter"
+    },
+    {
+      "parameters": {
+        "maxItems": 5,
+        "keep": "lastItems"
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        -512,
+        -96
+      ],
+      "id": "a325ebe3-2b47-479c-8b0f-f6cc5aa2ed00",
+      "name": "Limit"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "categories",
+        "include": "={{ $json.categories }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1.1,
+      "position": [
+        -496,
+        48
+      ],
+      "id": "ea645bb8-f84c-4195-b4b2-0febbc001620",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "carlod",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        -272,
+        48
+      ],
+      "id": "b9be9879-4324-4c3f-bf0e-996983f33936",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -256,
+        -992
+      ],
+      "id": "da2f8614-b1e7-4b6a-8c4d-3310b8e0b4af",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "url": "https://techcrunch.com/feed",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        -592,
+        -960
+      ],
+      "id": "563b34cf-a8d6-417b-b8e3-a001eabeff46",
+      "name": "RSS Read1"
+    },
+    {
+      "parameters": {
+        "keys": {
+          "key": [
+            {
+              "currentKey": "title",
+              "newKey": "Titulo"
+            },
+            {
+              "currentKey": "content",
+              "newKey": "Contenido"
+            },
+            {
+              "currentKey": "creator",
+              "newKey": "Creador"
+            }
+          ]
+        },
+        "additionalOptions": {}
+      },
+      "type": "n8n-nodes-base.renameKeys",
+      "typeVersion": 1,
+      "position": [
+        64,
+        -1104
+      ],
+      "id": "4dab2abc-083b-43d3-ae84-b88d9610a6fb",
+      "name": "Rename Keys"
+    },
+    {
+      "parameters": {
+        "sortFieldsUi": {
+          "sortField": [
+            {
+              "fieldName": "pubDate",
+              "order": "descending"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.sort",
+      "typeVersion": 1,
+      "position": [
+        112,
+        -912
+      ],
+      "id": "0ff74a43-5361-4361-ac2d-323ee4497a49",
+      "name": "Sort"
+    }
+  ],
+  "pinData": {
+    "RSS Read": [
+      {
+        "json": {
+          "creator": "Sean O'Kane",
+          "title": "Tesla is prepping a Cybercab onslaught",
+          "link": "https://techcrunch.com/2026/10/22/tesla-is-prepping-a-cybercab-onslaught/",
+          "pubDate": "Thu, 22 Oct 2026 15:44:39 +0000",
+          "dc:creator": "Sean O'Kane",
+          "content": "The company is looking to roll the gold two-seater robotaxis out to other U.S. cities this year, even as it goes mum on the number of paid rides.",
+          "contentSnippet": "The company is looking to roll the gold two-seater robotaxis out to other U.S. cities this year, even as it goes mum on the number of paid rides.",
+          "guid": "https://techcrunch.com/?p=3180608",
+          "categories": [
+            "Transportation",
+            "cybercab",
+            "robotaxi",
+            "Tesla"
+          ],
+          "isoDate": "2026-10-22T15:44:39.000Z"
+        },
+        "pairedItem": [
+          {
+            "item": 0
+          }
+        ]
+      },
+      {
+        "json": {
+          "creator": "Sarah Perez",
+          "title": "Spotify confirms Family Plan crackdown, but calls it a ‘routine improvement’",
+          "link": "https://techcrunch.com/2026/10/22/spotify-confirms-family-plan-crackdown-but-calls-it-a-routine-improvement/",
+          "pubDate": "Thu, 22 Oct 2026 15:24:32 +0000",
+          "dc:creator": "Sarah Perez",
+          "content": "Spotify told investors its roll out of QR code verification to ensure Family Plan members live in the same household is not a \"crackdown,\" just a routine improvement. ",
+          "contentSnippet": "Spotify told investors its roll out of QR code verification to ensure Family Plan members live in the same household is not a \"crackdown,\" just a routine improvement.",
+          "guid": "https://techcrunch.com/?p=3180618",
+          "categories": [
+            "Apps",
+            "Media & Entertainment",
+            "family",
+            "Music",
+            "Spotify",
+            "streaming"
+          ],
+          "isoDate": "2026-10-22T15:24:32.000Z"
+        },
+        "pairedItem": [
+          {
+            "item": 0
+          }
+        ]
+      },
+      {
+        "json": {
+          "creator": "Dominic-Madori Davis",
+          "title": "Investors break down how founders can raise a Series A today",
+          "link": "https://techcrunch.com/2026/10/22/investors-break-down-how-founders-can-raise-a-series-a-today/",
+          "pubDate": "Thu, 22 Oct 2026 15:15:00 +0000",
+          "dc:creator": "Dominic-Madori Davis",
+          "content": "Raising a Series A these days isn't so simple — top investors break down what founders need to know now. ",
+          "contentSnippet": "Raising a Series A these days isn't so simple — top investors break down what founders need to know now.",
+          "guid": "https://techcrunch.com/?p=3179631",
+          "categories": [
+            "Startups",
+            "Venture",
+            "fundraising"
+          ],
+          "isoDate": "2026-10-22T15:15:00.000Z"
+        },
+        "pairedItem": [
+          {
+            "item": 0
+          }
+        ]
+      },
+      {
+        "json": {
+          "creator": "Lauren Forristal",
+          "title": "Spotify’s current AI bet is about being the music service that agents choose",
+          "link": "https://techcrunch.com/2026/10/22/spotifys-current-ai-bet-is-about-being-the-music-service-that-agents-choose/",
+          "pubDate": "Thu, 22 Oct 2026 15:03:58 +0000",
+          "dc:creator": "Lauren Forristal",
+          "content": "Spotify co-CEO Gustav Söderström explains why the rise of AI agents could be good news for the music service.",
+          "contentSnippet": "Spotify co-CEO Gustav Söderström explains why the rise of AI agents could be good news for the music service.",
+          "guid": "https://techcrunch.com/?p=3180626",
+          "categories": [
+            "AI",
+            "Apps",
+            "Media & Entertainment",
+            "music streaming",
+            "Spotify",
+            "streaming"
+          ],
+          "isoDate": "2026-10-22T15:03:58.000Z"
+        },
+        "pairedItem": [
+          {
+            "item": 0
+          }
+        ]
+      },
+      {
+        "json": {
+          "creator": "Tim De Chant",
+          "title": "Fusion startup Helion is developing new semiconductors that could double output of its power plants",
+          "link": "https://techcrunch.com/2026/10/22/fusion-startup-helion-is-developing-new-semiconductors-that-could-double-output-of-its-power-plants/",
+          "pubDate": "Thu, 22 Oct 2026 14:59:28 +0000",
+          "dc:creator": "Tim De Chant",
+          "content": "Helion now has another $225 million to help speed development of its first fusion power plant, due to provide Microsoft with electricity in 2028.",
+          "contentSnippet": "Helion now has another $225 million to help speed development of its first fusion power plant, due to provide Microsoft with electricity in 2028.",
+          "guid": "https://techcrunch.com/?p=3180619",
+          "categories": [
+            "Climate",
+            "Fundraising",
+            "Startups",
+            "Chips Act",
+            "fusion power",
+            "Helion"
+          ],
+          "isoDate": "2026-10-22T14:59:28.000Z"
+        },
+        "pairedItem": [
+          {
+            "item": 0
+          }
+        ]
+      },
+      {
+        "json": {
+          "creator": "Zack Whittaker",
+          "title": "Developer platform Railway urges ‘all users’ to revoke secret keys after cyberattack",
+          "link": "https://techcrunch.com/2026/10/22/developer-platform-railway-urges-all-users-to-revoke-secret-keys-after-cyberattack/",
+          "pubDate": "Thu, 22 Oct 2026 14:03:00 +0000",
+          "dc:creator": "Zack Whittaker",
+          "content": "The vibe-coding platform said all of its customers should revoke and rotate their private keys, after hackers were able to decrypt some customer secrets.",
+          "contentSnippet": "The vibe-coding platform said all of its customers should revoke and rotate their private keys, after hackers were able to decrypt some customer secrets.",
+          "guid": "https://techcrunch.com/?p=3180611",
+          "categories": [
+            "Security",
+            "cybersecurity",
+            "data breach",
+            "hackers",
+            "railway",
+            "vibe coding"
+          ],
+          "isoDate": "2026-10-22T14:03:00.000Z"
+        },
+        "pairedItem": [
+          {
+            "item": 0
+          }
+        ]
+      },
+      {
+        "json": {
+          "creator": "Ivan Mehta",
+          "title": "Claude Duet app is Anthropic’s bet on agents",
+          "link": "https://techcrunch.com/2026/10/22/claude-duet-app-is-anthropics-bet-on-agents/",
+          "pubDate": "Thu, 22 Oct 2026 13:53:26 +0000",
+          "dc:creator": "Ivan Mehta",
+          "content": "Claude Duet is available through waitlist for Pro and Max plan users",
+          "contentSnippet": "Claude Duet is available through waitlist for Pro and Max plan users",
+          "guid": "https://techcrunch.com/?p=3180587",
+          "categories": [
+            "AI",
+            "Apps",
+            "ai agent",
+            "Anthropic",
+            "Claude"
+          ],
+          "isoDate": "2026-10-22T13:53:26.000Z"
+        },
+        "pairedItem": [
+          {
+            "item": 0
+          }
+        ]
+      },
+      {
+        "json": {
+          "creator": "Ivan Mehta",
+          "title": "Nirva raises $33M for a pendant that only listens to you",
+          "link": "https://techcrunch.com/2026/10/22/nirva-raises-33m-for-a-pendant-that-only-listens-to-you/",
+          "pubDate": "Thu, 22 Oct 2026 13:26:52 +0000",
+          "dc:creator": "Ivan Mehta",
+          "content": "Nirva will ship its $249 ambient AI pendant by the end of the year. ",
+          "contentSnippet": "Nirva will ship its $249 ambient AI pendant by the end of the year.",
+          "guid": "https://techcrunch.com/?p=3180570",
+          "categories": [
+            "AI",
+            "Gadgets",
+            "Ambient AI",
+            "Lightspeed Venture Capital",
+            "South Park Commons",
+            "wearables"
+          ],
+          "isoDate": "2026-10-22T13:26:52.000Z"
+        },
+        "pairedItem": [
+          {
+            "item": 0
+          }
+        ]
+      },
+      {
+        "json": {
+          "creator": "Kate Park",
+          "title": "DeepSeek reportedly raises $15B days after US restrictions",
+          "link": "https://techcrunch.com/2026/10/22/deepseek-reportedly-raises-15b-days-after-us-restrictions/",
+          "pubDate": "Thu, 22 Oct 2026 13:11:13 +0000",
+          "dc:creator": "Kate Park",
+          "content": "DeepSeek has reportedly raised $15 billion in one of China's largest funding rounds, just days after the US ordered federal agencies to remove its technology over national security concerns.",
+          "contentSnippet": "DeepSeek has reportedly raised $15 billion in one of China's largest funding rounds, just days after the US ordered federal agencies to remove its technology over national security concerns.",
+          "guid": "https://techcrunch.com/?p=3180589",
+          "categories": [
+            "AI",
+            "Fundraising",
+            "artificial intellignce",
+            "deepseek",
+            "Funding"
+          ],
+          "isoDate": "2026-10-22T13:11:13.000Z"
+        },
+        "pairedItem": [
+          {
+            "item": 0
+          }
+        ]
+      },
+      {
+        "json": {
+          "creator": "Kirsten Korosec",
+          "title": "Tesla says it will start selling Cybercabs by end of year",
+          "link": "https://techcrunch.com/2026/10/21/tesla-says-it-will-start-selling-cybercabs-by-end-of-year/",
+          "pubDate": "Thu, 22 Oct 2026 00:17:54 +0000",
+          "dc:creator": "Kirsten Korosec",
+          "content": "Tesla said Wednesday it will start selling its Cybercab to customers by the end of the year, even as federal regulators investigate whether the vehicle meets vehicle safety standards. The gold-hued, autonomous two-seater lacks a steering wheel and other traditional controls. During the company&#8217;s third-quarter earnings call, Lars Moravy, vice president of engineering at Tesla, [&#8230;]",
+          "contentSnippet": "Tesla said Wednesday it will start selling its Cybercab to customers by the end of the year, even as federal regulators investigate whether the vehicle meets vehicle safety standards. The gold-hued, autonomous two-seater lacks a steering wheel and other traditional controls. During the company’s third-quarter earnings call, Lars Moravy, vice president of engineering at Tesla, […]",
+          "guid": "https://techcrunch.com/?p=3180494",
+          "categories": [
+            "Transportation",
+            "cybercab",
+            "Tesla"
+          ],
+          "isoDate": "2026-10-22T00:17:54.000Z"
+        },
+        "pairedItem": [
+          {
+            "item": 0
+          }
+        ]
+      },
+      {
+        "json": {
+          "creator": "Marina Temkin",
+          "title": "Blackstone’s Jas Khaira says fears over AI-buildout debt are overblown",
+          "link": "https://techcrunch.com/2026/10/21/blackstones-jas-khaira-says-fears-over-ai-buildout-debt-are-overblown/",
+          "pubDate": "Wed, 21 Oct 2026 22:51:22 +0000",
+          "dc:creator": "Marina Temkin",
+          "content": "Blackstone’s AI head on why the PE giant isn't panicked by market jitters.",
+          "contentSnippet": "Blackstone’s AI head on why the PE giant isn't panicked by market jitters.",
+          "guid": "https://techcrunch.com/?p=3180358",
+          "categories": [
+            "AI",
+            "Hardware",
+            "Blackstone",
+            "CoreWeave",
+            "data centers",
+            "GPU",
+            "nvidia"
+          ],
+          "isoDate": "2026-10-21T22:51:22.000Z"
+        },
+        "pairedItem": [
+          {
+            "item": 0
+          }
+        ]
+      },
+      {
+        "json": {
+          "creator": "Lucas Ropek",
+          "title": "Meta wants to pay for its broad AI buildout with a newly created class of stock",
+          "link": "https://techcrunch.com/2026/10/21/meta-wants-to-pay-for-its-broad-ai-buildout-with-a-newly-created-class-of-stock/",
+          "pubDate": "Wed, 21 Oct 2026 22:45:34 +0000",
+          "dc:creator": "Lucas Ropek",
+          "content": "The social media giant is planning a new stock strategy to help power its broad investments in AI models and services. ",
+          "contentSnippet": "The social media giant is planning a new stock strategy to help power its broad investments in AI models and services.",
+          "guid": "https://techcrunch.com/?p=3180349",
+          "categories": [
+            "Social",
+            "AI",
+            "Facebook",
+            "Mark Zuckerberg",
+            "Meta"
+          ],
+          "isoDate": "2026-10-21T22:45:34.000Z"
+        },
+        "pairedItem": [
+          {
+            "item": 0
+          }
+        ]
+      },
+      {
+        "json": {
+          "creator": "Lauren Forristal",
+          "title": "Airbnb limits chores for guests, sparking backlash from hosts",
+          "link": "https://techcrunch.com/2026/10/21/airbnb-limits-chores-for-guests-sparking-backlash-from-hosts/",
+          "pubDate": "Wed, 21 Oct 2026 22:16:05 +0000",
+          "dc:creator": "Lauren Forristal",
+          "content": "Hosts are threatening to leave the platform after Airbnb says that they can no longer require guests to strip beds or do other time-consuming cleaning chores. ",
+          "contentSnippet": "Hosts are threatening to leave the platform after Airbnb says that they can no longer require guests to strip beds or do other time-consuming cleaning chores.",
+          "guid": "https://techcrunch.com/?p=3180432",
+          "categories": [
+            "Apps",
+            "Airbnb"
+          ],
+          "isoDate": "2026-10-21T22:16:05.000Z"
+        },
+        "pairedItem": [
+          {
+            "item": 0
+          }
+        ]
+      },
+      {
+        "json": {
+          "creator": "TechCrunch Events",
+          "title": "TechCrunch Founder Summit 2026: Everything you need to know ",
+          "link": "https://techcrunch.com/2026/10/21/techcrunch-founder-summit-2026-everything-you-need-to-know/",
+          "pubDate": "Wed, 21 Oct 2026 21:16:20 +0000",
+          "dc:creator": "TechCrunch Events",
+          "content": "TechCrunch Founder Summit is a full-day gathering in Boston on November 4 where founders across all stages connect with top VCs and experienced entrepreneurs to gain tactical insights on building and scaling their companies. ",
+          "contentSnippet": "TechCrunch Founder Summit is a full-day gathering in Boston on November 4 where founders across all stages connect with top VCs and experienced entrepreneurs to gain tactical insights on building and scaling their companies.",
+          "guid": "https://techcrunch.com/?p=3168635",
+          "categories": [
+            "AI",
+            "Startups",
+            "Venture",
+            "TechCrunch Founder Summit"
+          ],
+          "isoDate": "2026-10-21T21:16:20.000Z"
+        },
+        "pairedItem": [
+          {
+            "item": 0
+          }
+        ]
+      },
+      {
+        "json": {
+          "creator": "Sarah Perez",
+          "title": "Meta says Muse has over 10M users, with shopping a top activity",
+          "link": "https://techcrunch.com/2026/10/21/meta-says-muse-has-over-10m-users-with-shopping-a-top-activity/",
+          "pubDate": "Wed, 21 Oct 2026 21:14:19 +0000",
+          "dc:creator": "Sarah Perez",
+          "content": "Meta Muse users are adopting the app for shopping and personal productivity, the company said during its Q3 earnings call. The AI app now has over 10M users.",
+          "contentSnippet": "Meta Muse users are adopting the app for shopping and personal productivity, the company said during its Q3 earnings call. The AI app now has over 10M users.",
+          "guid": "https://techcrunch.com/?p=3180391",
+          "categories": [
+            "AI",
+            "Apps",
+            "Social",
+            "agentic commerce",
+            "e-commerce",
+            "Meta",
+            "muse"
+          ],
+          "isoDate": "2026-10-21T21:14:19.000Z"
+        },
+        "pairedItem": [
+          {
+            "item": 0
+          }
+        ]
+      },
+      {
+        "json": {
+          "creator": "Julie Bort",
+          "title": "Year-old AI lab Flapping Airplanes raises $1B at a $6B valuation",
+          "link": "https://techcrunch.com/2026/10/21/year-old-ai-lab-flapping-airplanes-raises-1b-at-a-6b-valuation/",
+          "pubDate": "Wed, 21 Oct 2026 20:57:40 +0000",
+          "dc:creator": "Julie Bort",
+          "content": "Just 9 months after raising a $180 million seed round, Flapping Airplanes has landed a $1 billion Series A for its mission to build AI models \"without ingesting half the internet.\"",
+          "contentSnippet": "Just 9 months after raising a $180 million seed round, Flapping Airplanes has landed a $1 billion Series A for its mission to build AI models \"without ingesting half the internet.\"",
+          "guid": "https://techcrunch.com/?p=3180348",
+          "categories": [
+            "Fundraising",
+            "Startups",
+            "Flapping Airplanes"
+          ],
+          "isoDate": "2026-10-21T20:57:40.000Z"
+        },
+        "pairedItem": [
+          {
+            "item": 0
+          }
+        ]
+      },
+      {
+        "json": {
+          "creator": "Kirsten Korosec, Sean O'Kane",
+          "title": "Tesla starts Optimus robot production in California as profit falls 43%",
+          "link": "https://techcrunch.com/2026/10/21/tesla-stars-optimus-robot-production-in-california-as-profit-falls-43/",
+          "pubDate": "Wed, 21 Oct 2026 20:33:09 +0000",
+          "dc:creator": "Kirsten Korosec, Sean O'Kane",
+          "content": "Tesla's revenue was flat and its expenses skyrocketed as it pressed the accelerator on its Optimus robots, AI, and autonomous driving.",
+          "contentSnippet": "Tesla's revenue was flat and its expenses skyrocketed as it pressed the accelerator on its Optimus robots, AI, and autonomous driving.",
+          "guid": "https://techcrunch.com/?p=3180381",
+          "categories": [
+            "Robotics",
+            "Transportation",
+            "Elon Musk",
+            "Tesla",
+            "Optimus"
+          ],
+          "isoDate": "2026-10-21T20:33:09.000Z"
+        },
+        "pairedItem": [
+          {
+            "item": 0
+          }
+        ]
+      },
+      {
+        "json": {
+          "creator": "Aditya Mehta",
+          "title": "Recursive launches Flint, a laptop coding model it says was largely built by AI",
+          "link": "https://techcrunch.com/2026/10/21/recursive-launches-flint-a-laptop-coding-model-it-says-was-largely-built-by-ai/",
+          "pubDate": "Wed, 21 Oct 2026 20:27:41 +0000",
+          "dc:creator": "Aditya Mehta",
+          "content": "Startup Recursive has released Flint, a free, laptop-sized coding model built largely by its own AI research system, as an early test of AI that improves itself.",
+          "contentSnippet": "Startup Recursive has released Flint, a free, laptop-sized coding model built largely by its own AI research system, as an early test of AI that improves itself.",
+          "guid": "https://techcrunch.com/?p=3180324",
+          "categories": [
+            "AI",
+            "flint"
+          ],
+          "isoDate": "2026-10-21T20:27:41.000Z"
+        },
+        "pairedItem": [
+          {
+            "item": 0
+          }
+        ]
+      },
+      {
+        "json": {
+          "creator": "Sarah Perez",
+          "title": "Automattic begins layoffs following board upheaval and executive departures",
+          "link": "https://techcrunch.com/2026/10/21/automattic-begins-layoffs-following-board-upheaval-and-executive-departures/",
+          "pubDate": "Wed, 21 Oct 2026 20:15:00 +0000",
+          "dc:creator": "Sarah Perez",
+          "content": "Sources say more cuts could follow as the company looks to improve its finances. ",
+          "contentSnippet": "Sources say more cuts could follow as the company looks to improve its finances.",
+          "guid": "https://techcrunch.com/?p=3180174",
+          "categories": [
+            "Media & Entertainment",
+            "Automattic",
+            "Layoffs",
+            "WordPress"
+          ],
+          "isoDate": "2026-10-21T20:15:00.000Z"
+        },
+        "pairedItem": [
+          {
+            "item": 0
+          }
+        ]
+      },
+      {
+        "json": {
+          "creator": "Tim De Chant, Kirsten Korosec",
+          "title": "GM is betting compute and AI will help it compete with Chinese automakers",
+          "link": "https://techcrunch.com/2026/10/21/gm-is-betting-compute-and-ai-will-help-it-compete-with-chinese-automakers/",
+          "pubDate": "Wed, 21 Oct 2026 19:52:20 +0000",
+          "dc:creator": "Tim De Chant, Kirsten Korosec",
+          "content": "To compete with Tesla, Rivian, and a host of Chinese automakers, GM’s fourth-gen EV platform will roll out a new central computer and electrical architecture that will debut in 2028 in the Cadillac Escalade IQ.",
+          "contentSnippet": "To compete with Tesla, Rivian, and a host of Chinese automakers, GM’s fourth-gen EV platform will roll out a new central computer and electrical architecture that will debut in 2028 in the Cadillac Escalade IQ.",
+          "guid": "https://techcrunch.com/?p=3180223",
+          "categories": [
+            "Climate",
+            "Transportation",
+            "electric vehicles",
+            "General Motors",
+            "GM",
+            "software-defined vehicle"
+          ],
+          "isoDate": "2026-10-21T19:52:20.000Z"
+        },
+        "pairedItem": [
+          {
+            "item": 0
+          }
+        ]
+      }
+    ],
+    "RSS Read1": [
+      {
+        "json": {
+          "creator": "Sean O'Kane",
+          "title": "Tesla is prepping a Cybercab onslaught",
+          "link": "https://techcrunch.com/2026/10/22/tesla-is-prepping-a-cybercab-onslaught/",
+          "pubDate": "Thu, 22 Oct 2026 15:44:39 +0000",
+          "dc:creator": "Sean O'Kane",
+          "content": "The company is looking to roll the gold two-seater robotaxis out to other U.S. cities this year, even as it goes mum on the number of paid rides.",
+          "contentSnippet": "The company is looking to roll the gold two-seater robotaxis out to other U.S. cities this year, even as it goes mum on the number of paid rides.",
+          "guid": "https://techcrunch.com/?p=3180608",
+          "categories": [
+            "Transportation",
+            "cybercab",
+            "robotaxi",
+            "Tesla"
+          ],
+          "isoDate": "2026-10-22T15:44:39.000Z"
+        }
+      },
+      {
+        "json": {
+          "creator": "Sarah Perez",
+          "title": "Spotify confirms Family Plan crackdown, but calls it a ‘routine improvement’",
+          "link": "https://techcrunch.com/2026/10/22/spotify-confirms-family-plan-crackdown-but-calls-it-a-routine-improvement/",
+          "pubDate": "Thu, 22 Oct 2026 15:24:32 +0000",
+          "dc:creator": "Sarah Perez",
+          "content": "Spotify told investors its roll out of QR code verification to ensure Family Plan members live in the same household is not a \"crackdown,\" just a routine improvement. ",
+          "contentSnippet": "Spotify told investors its roll out of QR code verification to ensure Family Plan members live in the same household is not a \"crackdown,\" just a routine improvement.",
+          "guid": "https://techcrunch.com/?p=3180618",
+          "categories": [
+            "Apps",
+            "Media & Entertainment",
+            "family",
+            "Music",
+            "Spotify",
+            "streaming"
+          ],
+          "isoDate": "2026-10-22T15:24:32.000Z"
+        }
+      },
+      {
+        "json": {
+          "creator": "Dominic-Madori Davis",
+          "title": "Investors break down how founders can raise a Series A today",
+          "link": "https://techcrunch.com/2026/10/22/investors-break-down-how-founders-can-raise-a-series-a-today/",
+          "pubDate": "Thu, 22 Oct 2026 15:15:00 +0000",
+          "dc:creator": "Dominic-Madori Davis",
+          "content": "Raising a Series A these days isn't so simple — top investors break down what founders need to know now. ",
+          "contentSnippet": "Raising a Series A these days isn't so simple — top investors break down what founders need to know now.",
+          "guid": "https://techcrunch.com/?p=3179631",
+          "categories": [
+            "Startups",
+            "Venture",
+            "fundraising"
+          ],
+          "isoDate": "2026-10-22T15:15:00.000Z"
+        }
+      },
+      {
+        "json": {
+          "creator": "Lauren Forristal",
+          "title": "Spotify’s current AI bet is about being the music service that agents choose",
+          "link": "https://techcrunch.com/2026/10/22/spotifys-current-ai-bet-is-about-being-the-music-service-that-agents-choose/",
+          "pubDate": "Thu, 22 Oct 2026 15:03:58 +0000",
+          "dc:creator": "Lauren Forristal",
+          "content": "Spotify co-CEO Gustav Söderström explains why the rise of AI agents could be good news for the music service.",
+          "contentSnippet": "Spotify co-CEO Gustav Söderström explains why the rise of AI agents could be good news for the music service.",
+          "guid": "https://techcrunch.com/?p=3180626",
+          "categories": [
+            "AI",
+            "Apps",
+            "Media & Entertainment",
+            "music streaming",
+            "Spotify",
+            "streaming"
+          ],
+          "isoDate": "2026-10-22T15:03:58.000Z"
+        }
+      },
+      {
+        "json": {
+          "creator": "Tim De Chant",
+          "title": "Fusion startup Helion is developing new semiconductors that could double output of its power plants",
+          "link": "https://techcrunch.com/2026/10/22/fusion-startup-helion-is-developing-new-semiconductors-that-could-double-output-of-its-power-plants/",
+          "pubDate": "Thu, 22 Oct 2026 14:59:28 +0000",
+          "dc:creator": "Tim De Chant",
+          "content": "Helion now has another $225 million to help speed development of its first fusion power plant, due to provide Microsoft with electricity in 2028.",
+          "contentSnippet": "Helion now has another $225 million to help speed development of its first fusion power plant, due to provide Microsoft with electricity in 2028.",
+          "guid": "https://techcrunch.com/?p=3180619",
+          "categories": [
+            "Climate",
+            "Fundraising",
+            "Startups",
+            "Chips Act",
+            "fusion power",
+            "Helion"
+          ],
+          "isoDate": "2026-10-22T14:59:28.000Z"
+        }
+      },
+      {
+        "json": {
+          "creator": "Zack Whittaker",
+          "title": "Developer platform Railway urges ‘all users’ to revoke secret keys after cyberattack",
+          "link": "https://techcrunch.com/2026/10/22/developer-platform-railway-urges-all-users-to-revoke-secret-keys-after-cyberattack/",
+          "pubDate": "Thu, 22 Oct 2026 14:03:00 +0000",
+          "dc:creator": "Zack Whittaker",
+          "content": "The vibe-coding platform said all of its customers should revoke and rotate their private keys, after hackers were able to decrypt some customer secrets.",
+          "contentSnippet": "The vibe-coding platform said all of its customers should revoke and rotate their private keys, after hackers were able to decrypt some customer secrets.",
+          "guid": "https://techcrunch.com/?p=3180611",
+          "categories": [
+            "Security",
+            "cybersecurity",
+            "data breach",
+            "hackers",
+            "railway",
+            "vibe coding"
+          ],
+          "isoDate": "2026-10-22T14:03:00.000Z"
+        }
+      },
+      {
+        "json": {
+          "creator": "Ivan Mehta",
+          "title": "Claude Duet app is Anthropic’s bet on agents",
+          "link": "https://techcrunch.com/2026/10/22/claude-duet-app-is-anthropics-bet-on-agents/",
+          "pubDate": "Thu, 22 Oct 2026 13:53:26 +0000",
+          "dc:creator": "Ivan Mehta",
+          "content": "Claude Duet is available through waitlist for Pro and Max plan users",
+          "contentSnippet": "Claude Duet is available through waitlist for Pro and Max plan users",
+          "guid": "https://techcrunch.com/?p=3180587",
+          "categories": [
+            "AI",
+            "Apps",
+            "ai agent",
+            "Anthropic",
+            "Claude"
+          ],
+          "isoDate": "2026-10-22T13:53:26.000Z"
+        }
+      },
+      {
+        "json": {
+          "creator": "Ivan Mehta",
+          "title": "Nirva raises $33M for a pendant that only listens to you",
+          "link": "https://techcrunch.com/2026/10/22/nirva-raises-33m-for-a-pendant-that-only-listens-to-you/",
+          "pubDate": "Thu, 22 Oct 2026 13:26:52 +0000",
+          "dc:creator": "Ivan Mehta",
+          "content": "Nirva will ship its $249 ambient AI pendant by the end of the year. ",
+          "contentSnippet": "Nirva will ship its $249 ambient AI pendant by the end of the year.",
+          "guid": "https://techcrunch.com/?p=3180570",
+          "categories": [
+            "AI",
+            "Gadgets",
+            "Ambient AI",
+            "Lightspeed Venture Capital",
+            "South Park Commons",
+            "wearables"
+          ],
+          "isoDate": "2026-10-22T13:26:52.000Z"
+        }
+      },
+      {
+        "json": {
+          "creator": "Kate Park",
+          "title": "DeepSeek reportedly raises $15B days after US restrictions",
+          "link": "https://techcrunch.com/2026/10/22/deepseek-reportedly-raises-15b-days-after-us-restrictions/",
+          "pubDate": "Thu, 22 Oct 2026 13:11:13 +0000",
+          "dc:creator": "Kate Park",
+          "content": "DeepSeek has reportedly raised $15 billion in one of China's largest funding rounds, just days after the US ordered federal agencies to remove its technology over national security concerns.",
+          "contentSnippet": "DeepSeek has reportedly raised $15 billion in one of China's largest funding rounds, just days after the US ordered federal agencies to remove its technology over national security concerns.",
+          "guid": "https://techcrunch.com/?p=3180589",
+          "categories": [
+            "AI",
+            "Fundraising",
+            "artificial intellignce",
+            "deepseek",
+            "Funding"
+          ],
+          "isoDate": "2026-10-22T13:11:13.000Z"
+        }
+      },
+      {
+        "json": {
+          "creator": "Kirsten Korosec",
+          "title": "Tesla says it will start selling Cybercabs by end of year",
+          "link": "https://techcrunch.com/2026/10/21/tesla-says-it-will-start-selling-cybercabs-by-end-of-year/",
+          "pubDate": "Thu, 22 Oct 2026 00:17:54 +0000",
+          "dc:creator": "Kirsten Korosec",
+          "content": "Tesla said Wednesday it will start selling its Cybercab to customers by the end of the year, even as federal regulators investigate whether the vehicle meets vehicle safety standards. The gold-hued, autonomous two-seater lacks a steering wheel and other traditional controls. During the company&#8217;s third-quarter earnings call, Lars Moravy, vice president of engineering at Tesla, [&#8230;]",
+          "contentSnippet": "Tesla said Wednesday it will start selling its Cybercab to customers by the end of the year, even as federal regulators investigate whether the vehicle meets vehicle safety standards. The gold-hued, autonomous two-seater lacks a steering wheel and other traditional controls. During the company’s third-quarter earnings call, Lars Moravy, vice president of engineering at Tesla, […]",
+          "guid": "https://techcrunch.com/?p=3180494",
+          "categories": [
+            "Transportation",
+            "cybercab",
+            "Tesla"
+          ],
+          "isoDate": "2026-10-22T00:17:54.000Z"
+        }
+      },
+      {
+        "json": {
+          "creator": "Marina Temkin",
+          "title": "Blackstone’s Jas Khaira says fears over AI-buildout debt are overblown",
+          "link": "https://techcrunch.com/2026/10/21/blackstones-jas-khaira-says-fears-over-ai-buildout-debt-are-overblown/",
+          "pubDate": "Wed, 21 Oct 2026 22:51:22 +0000",
+          "dc:creator": "Marina Temkin",
+          "content": "Blackstone’s AI head on why the PE giant isn't panicked by market jitters.",
+          "contentSnippet": "Blackstone’s AI head on why the PE giant isn't panicked by market jitters.",
+          "guid": "https://techcrunch.com/?p=3180358",
+          "categories": [
+            "AI",
+            "Hardware",
+            "Blackstone",
+            "CoreWeave",
+            "data centers",
+            "GPU",
+            "nvidia"
+          ],
+          "isoDate": "2026-10-21T22:51:22.000Z"
+        }
+      },
+      {
+        "json": {
+          "creator": "Lucas Ropek",
+          "title": "Meta wants to pay for its broad AI buildout with a newly created class of stock",
+          "link": "https://techcrunch.com/2026/10/21/meta-wants-to-pay-for-its-broad-ai-buildout-with-a-newly-created-class-of-stock/",
+          "pubDate": "Wed, 21 Oct 2026 22:45:34 +0000",
+          "dc:creator": "Lucas Ropek",
+          "content": "The social media giant is planning a new stock strategy to help power its broad investments in AI models and services. ",
+          "contentSnippet": "The social media giant is planning a new stock strategy to help power its broad investments in AI models and services.",
+          "guid": "https://techcrunch.com/?p=3180349",
+          "categories": [
+            "Social",
+            "AI",
+            "Facebook",
+            "Mark Zuckerberg",
+            "Meta"
+          ],
+          "isoDate": "2026-10-21T22:45:34.000Z"
+        }
+      },
+      {
+        "json": {
+          "creator": "Lauren Forristal",
+          "title": "Airbnb limits chores for guests, sparking backlash from hosts",
+          "link": "https://techcrunch.com/2026/10/21/airbnb-limits-chores-for-guests-sparking-backlash-from-hosts/",
+          "pubDate": "Wed, 21 Oct 2026 22:16:05 +0000",
+          "dc:creator": "Lauren Forristal",
+          "content": "Hosts are threatening to leave the platform after Airbnb says that they can no longer require guests to strip beds or do other time-consuming cleaning chores. ",
+          "contentSnippet": "Hosts are threatening to leave the platform after Airbnb says that they can no longer require guests to strip beds or do other time-consuming cleaning chores.",
+          "guid": "https://techcrunch.com/?p=3180432",
+          "categories": [
+            "Apps",
+            "Airbnb"
+          ],
+          "isoDate": "2026-10-21T22:16:05.000Z"
+        }
+      },
+      {
+        "json": {
+          "creator": "TechCrunch Events",
+          "title": "TechCrunch Founder Summit 2026: Everything you need to know ",
+          "link": "https://techcrunch.com/2026/10/21/techcrunch-founder-summit-2026-everything-you-need-to-know/",
+          "pubDate": "Wed, 21 Oct 2026 21:16:20 +0000",
+          "dc:creator": "TechCrunch Events",
+          "content": "TechCrunch Founder Summit is a full-day gathering in Boston on November 4 where founders across all stages connect with top VCs and experienced entrepreneurs to gain tactical insights on building and scaling their companies. ",
+          "contentSnippet": "TechCrunch Founder Summit is a full-day gathering in Boston on November 4 where founders across all stages connect with top VCs and experienced entrepreneurs to gain tactical insights on building and scaling their companies.",
+          "guid": "https://techcrunch.com/?p=3168635",
+          "categories": [
+            "AI",
+            "Startups",
+            "Venture",
+            "TechCrunch Founder Summit"
+          ],
+          "isoDate": "2026-10-21T21:16:20.000Z"
+        }
+      },
+      {
+        "json": {
+          "creator": "Sarah Perez",
+          "title": "Meta says Muse has over 10M users, with shopping a top activity",
+          "link": "https://techcrunch.com/2026/10/21/meta-says-muse-has-over-10m-users-with-shopping-a-top-activity/",
+          "pubDate": "Wed, 21 Oct 2026 21:14:19 +0000",
+          "dc:creator": "Sarah Perez",
+          "content": "Meta Muse users are adopting the app for shopping and personal productivity, the company said during its Q3 earnings call. The AI app now has over 10M users.",
+          "contentSnippet": "Meta Muse users are adopting the app for shopping and personal productivity, the company said during its Q3 earnings call. The AI app now has over 10M users.",
+          "guid": "https://techcrunch.com/?p=3180391",
+          "categories": [
+            "AI",
+            "Apps",
+            "Social",
+            "agentic commerce",
+            "e-commerce",
+            "Meta",
+            "muse"
+          ],
+          "isoDate": "2026-10-21T21:14:19.000Z"
+        }
+      },
+      {
+        "json": {
+          "creator": "Julie Bort",
+          "title": "Year-old AI lab Flapping Airplanes raises $1B at a $6B valuation",
+          "link": "https://techcrunch.com/2026/10/21/year-old-ai-lab-flapping-airplanes-raises-1b-at-a-6b-valuation/",
+          "pubDate": "Wed, 21 Oct 2026 20:57:40 +0000",
+          "dc:creator": "Julie Bort",
+          "content": "Just 9 months after raising a $180 million seed round, Flapping Airplanes has landed a $1 billion Series A for its mission to build AI models \"without ingesting half the internet.\"",
+          "contentSnippet": "Just 9 months after raising a $180 million seed round, Flapping Airplanes has landed a $1 billion Series A for its mission to build AI models \"without ingesting half the internet.\"",
+          "guid": "https://techcrunch.com/?p=3180348",
+          "categories": [
+            "Fundraising",
+            "Startups",
+            "Flapping Airplanes"
+          ],
+          "isoDate": "2026-10-21T20:57:40.000Z"
+        }
+      },
+      {
+        "json": {
+          "creator": "Kirsten Korosec, Sean O'Kane",
+          "title": "Tesla starts Optimus robot production in California as profit falls 43%",
+          "link": "https://techcrunch.com/2026/10/21/tesla-stars-optimus-robot-production-in-california-as-profit-falls-43/",
+          "pubDate": "Wed, 21 Oct 2026 20:33:09 +0000",
+          "dc:creator": "Kirsten Korosec, Sean O'Kane",
+          "content": "Tesla's revenue was flat and its expenses skyrocketed as it pressed the accelerator on its Optimus robots, AI, and autonomous driving.",
+          "contentSnippet": "Tesla's revenue was flat and its expenses skyrocketed as it pressed the accelerator on its Optimus robots, AI, and autonomous driving.",
+          "guid": "https://techcrunch.com/?p=3180381",
+          "categories": [
+            "Robotics",
+            "Transportation",
+            "Elon Musk",
+            "Tesla",
+            "Optimus"
+          ],
+          "isoDate": "2026-10-21T20:33:09.000Z"
+        }
+      },
+      {
+        "json": {
+          "creator": "Aditya Mehta",
+          "title": "Recursive launches Flint, a laptop coding model it says was largely built by AI",
+          "link": "https://techcrunch.com/2026/10/21/recursive-launches-flint-a-laptop-coding-model-it-says-was-largely-built-by-ai/",
+          "pubDate": "Wed, 21 Oct 2026 20:27:41 +0000",
+          "dc:creator": "Aditya Mehta",
+          "content": "Startup Recursive has released Flint, a free, laptop-sized coding model built largely by its own AI research system, as an early test of AI that improves itself.",
+          "contentSnippet": "Startup Recursive has released Flint, a free, laptop-sized coding model built largely by its own AI research system, as an early test of AI that improves itself.",
+          "guid": "https://techcrunch.com/?p=3180324",
+          "categories": [
+            "AI",
+            "flint"
+          ],
+          "isoDate": "2026-10-21T20:27:41.000Z"
+        }
+      },
+      {
+        "json": {
+          "creator": "Sarah Perez",
+          "title": "Automattic begins layoffs following board upheaval and executive departures",
+          "link": "https://techcrunch.com/2026/10/21/automattic-begins-layoffs-following-board-upheaval-and-executive-departures/",
+          "pubDate": "Wed, 21 Oct 2026 20:15:00 +0000",
+          "dc:creator": "Sarah Perez",
+          "content": "Sources say more cuts could follow as the company looks to improve its finances. ",
+          "contentSnippet": "Sources say more cuts could follow as the company looks to improve its finances.",
+          "guid": "https://techcrunch.com/?p=3180174",
+          "categories": [
+            "Media & Entertainment",
+            "Automattic",
+            "Layoffs",
+            "WordPress"
+          ],
+          "isoDate": "2026-10-21T20:15:00.000Z"
+        }
+      },
+      {
+        "json": {
+          "creator": "Tim De Chant, Kirsten Korosec",
+          "title": "GM is betting compute and AI will help it compete with Chinese automakers",
+          "link": "https://techcrunch.com/2026/10/21/gm-is-betting-compute-and-ai-will-help-it-compete-with-chinese-automakers/",
+          "pubDate": "Wed, 21 Oct 2026 19:52:20 +0000",
+          "dc:creator": "Tim De Chant, Kirsten Korosec",
+          "content": "To compete with Tesla, Rivian, and a host of Chinese automakers, GM’s fourth-gen EV platform will roll out a new central computer and electrical architecture that will debut in 2028 in the Cadillac Escalade IQ.",
+          "contentSnippet": "To compete with Tesla, Rivian, and a host of Chinese automakers, GM’s fourth-gen EV platform will roll out a new central computer and electrical architecture that will debut in 2028 in the Cadillac Escalade IQ.",
+          "guid": "https://techcrunch.com/?p=3180223",
+          "categories": [
+            "Climate",
+            "Transportation",
+            "electric vehicles",
+            "General Motors",
+            "GM",
+            "software-defined vehicle"
+          ],
+          "isoDate": "2026-10-21T19:52:20.000Z"
+        }
+      }
+    ]
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "shared": [
+    {
+      "role": "workflow:owner",
+      "workflowId": "DrjQK3VTTmTnIJTm",
+      "projectId": "n72aYZueYjK1JFSF",
+      "createdAt": "2026-10-21T22:19:35.078Z",
+      "updatedAt": "2026-10-21T22:19:35.078Z"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-10-30T16:39:52.639Z",
+  "versionId": "2247983e-75ac-4f59-a088-1abf3d3b4528"
+}
