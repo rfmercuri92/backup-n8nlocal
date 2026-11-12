@@ -1,0 +1,125 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-10-27T17:48:32.358Z",
+  "id": "rYtOyD1BgBtbuwTk",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Error Workflow",
+  "nodeGroups": [],
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        -240,
+        -16
+      ],
+      "id": "ea13945a-3e83-45e3-b426-37f4b77113e4",
+      "name": "Error Trigger"
+    },
+    {
+      "parameters": {
+        "chatId": "8474742624",
+        "text": "=🤖 ERROR en n8n\n⚙️ Workflow: {{ $json.workflow.name }} - {{ $json.execution.url }}\n👉 Error: {{ $json.execution.error.message }} en el nodo {{ $json.execution.lastNodeExecuted }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        -32
+      ],
+      "id": "cf48a6b3-a218-4cc2-9829-14a53f29e5e0",
+      "name": "Send a text message",
+      "webhookId": "5ab8a018-436a-4f41-aec7-1b5b37b84644",
+      "credentials": {
+        "telegramApi": {
+          "id": "F9b2DQ5ex6So0vNe",
+          "name": "N8Nrobotrone_bot"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "Error Trigger": [
+      {
+        "json": {
+          "execution": {
+            "id": "209",
+            "url": "http://localhost:5678/workflow/9t2864C1LIj1iNZP/executions/209",
+            "error": {
+              "level": "info",
+              "shouldReport": false,
+              "description": "SyntaxError",
+              "tags": {},
+              "name": "WrappedExecutionError",
+              "message": "Missing initializer in const declaration",
+              "stack": "WrappedExecutionError: Missing initializer in const declaration\n    at throwExecutionError (C:\\Users\\rfmer\\AppData\\Roaming\\npm\\node_modules\\n8n\\node_modules\\n8n-nodes-base\\nodes\\Code\\throw-execution-error.ts:11:9)\n    at JsTaskRunnerSandbox.runCodeAllItems (C:\\Users\\rfmer\\AppData\\Roaming\\npm\\node_modules\\n8n\\node_modules\\n8n-nodes-base\\nodes\\Code\\JsTaskRunnerSandbox.ts:46:23)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at ExecuteContext.execute (C:\\Users\\rfmer\\AppData\\Roaming\\npm\\node_modules\\n8n\\node_modules\\n8n-nodes-base\\nodes\\Code\\Code.node.ts:219:8)\n    at WorkflowExecute.executeNode (C:\\Users\\rfmer\\AppData\\Roaming\\npm\\node_modules\\n8n\\node_modules\\n8n-core\\src\\execution-engine\\workflow-execute.ts:1154:8)\n    at WorkflowExecute.runNode (C:\\Users\\rfmer\\AppData\\Roaming\\npm\\node_modules\\n8n\\node_modules\\n8n-core\\src\\execution-engine\\workflow-execute.ts:1456:11)\n    at C:\\Users\\rfmer\\AppData\\Roaming\\npm\\node_modules\\n8n\\node_modules\\n8n-core\\src\\execution-engine\\workflow-execute.ts:2377:27\n    at C:\\Users\\rfmer\\AppData\\Roaming\\npm\\node_modules\\n8n\\node_modules\\n8n-core\\src\\execution-engine\\workflow-execute.ts:2858:11"
+            },
+            "lastNodeExecuted": "Code in JavaScript",
+            "mode": "trigger",
+            "executionContext": {
+              "version": 1,
+              "establishedAt": 1793124840009,
+              "source": "trigger",
+              "triggerNode": {
+                "name": "Schedule Trigger",
+                "type": "n8n-nodes-base.scheduleTrigger"
+              },
+              "redaction": {
+                "version": 2,
+                "production": false,
+                "manual": false
+              }
+            }
+          },
+          "workflow": {
+            "id": "9t2864C1LIj1iNZP",
+            "name": "Nodo Code"
+          }
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ]
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "shared": [
+    {
+      "role": "workflow:owner",
+      "workflowId": "rYtOyD1BgBtbuwTk",
+      "projectId": "n72aYZueYjK1JFSF",
+      "createdAt": "2026-10-27T17:48:32.359Z",
+      "updatedAt": "2026-10-27T17:48:32.359Z"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-10-30T14:52:23.934Z",
+  "versionId": "12d7b647-61cf-4d30-975b-503db8775548"
+}
