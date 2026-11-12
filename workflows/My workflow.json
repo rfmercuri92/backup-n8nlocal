@@ -1,0 +1,97 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-10-29T20:22:38.354Z",
+  "id": "BljsJLRyQUD41uR8",
+  "isArchived": true,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "My workflow",
+  "nodeGroups": [],
+  "nodes": [
+    {
+      "parameters": {
+        "options": {
+          "responseMode": "responseNodes"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.5,
+      "position": [
+        -400,
+        -64
+      ],
+      "id": "e5e76ca6-8562-4e4d-8985-224c80f0f379",
+      "name": "When chat message received",
+      "webhookId": "b1ca2240-8b4d-4f9a-b61d-20eb47b992c2"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "models/gemini-3-flash-preview"
+        },
+        "messages": {
+          "values": [
+            {}
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.2,
+      "position": [
+        -176,
+        -64
+      ],
+      "id": "8840baec-3152-4a6a-ab06-73689d48e380",
+      "name": "Message a model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "Pxt33LNklqCjfPDI",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "timeSavedMode": "fixed",
+    "timezone": "America/Argentina/Buenos_Aires",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "role": "workflow:owner",
+      "workflowId": "BljsJLRyQUD41uR8",
+      "projectId": "n72aYZueYjK1JFSF",
+      "createdAt": "2026-10-29T20:22:38.356Z",
+      "updatedAt": "2026-10-29T20:22:38.356Z"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2026-10-30T14:51:30.000Z",
+  "versionId": "1311051a-d1f3-4a41-8da4-f9ab3e80124d"
+}
