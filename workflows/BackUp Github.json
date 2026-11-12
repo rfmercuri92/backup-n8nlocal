@@ -1,0 +1,506 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Get many workflows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many workflows": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Get a file",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Get a file": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "isDiffOrNew",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "isDiffOrNew": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Create a file",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit a file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a file": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "No Operation, do nothing": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit a file": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-11-11T16:42:21.405Z",
+  "id": "22rZ71864KufKCal",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "BackUp Github",
+  "nodeGroups": [],
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -2768,
+        -144
+      ],
+      "id": "53918507-9468-45fd-b228-60eca7ead502",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "143268d7-ac6c-4224-ac31-882ba33a1c4c",
+              "name": "repo.owner",
+              "value": "rfmercuri92",
+              "type": "string"
+            },
+            {
+              "id": "ef89c7f4-ffd8-4236-8354-56a6f4eabaa0",
+              "name": "repo.name",
+              "value": "backup-n8nlocal",
+              "type": "string"
+            },
+            {
+              "id": "355e566b-28d5-41a2-88ef-1ec86cf013f6",
+              "name": "repo.path",
+              "value": "workflows/",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        -2544,
+        -144
+      ],
+      "id": "d9953f97-650d-4fe2-904f-dd338362e32f",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "filters": {},
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-base.n8n",
+      "typeVersion": 1,
+      "position": [
+        -2320,
+        -144
+      ],
+      "id": "f42f171a-2088-4bad-9ead-adc283238993",
+      "name": "Get many workflows",
+      "credentials": {
+        "n8nApi": {
+          "id": "ke34qEXouFSHtjfz",
+          "name": "n8n account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -2096,
+        -144
+      ],
+      "id": "a2036d15-e180-41f7-b15d-5365dc0dba0c",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "operation": "get",
+        "owner": {
+          "__rl": true,
+          "value": "={{ $('Edit Fields').item.json.repo.owner }}",
+          "mode": "name"
+        },
+        "repository": {
+          "__rl": true,
+          "mode": "name",
+          "value": "={{ $('Edit Fields').item.json.repo.name }}"
+        },
+        "filePath": "={{ $('Edit Fields').item.json.repo.path }}{{ $json.name }}.json",
+        "asBinaryProperty": false,
+        "additionalParameters": {}
+      },
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1.1,
+      "position": [
+        -1872,
+        -544
+      ],
+      "id": "f19dde17-8606-4e86-bdec-055310d6bc1b",
+      "name": "Get a file",
+      "webhookId": "54cd8525-a631-4da7-9a9f-dfae402653dc",
+      "alwaysOutputData": true,
+      "credentials": {
+        "githubApi": {
+          "id": "RwkWdY07WCSEackY",
+          "name": "GitHub account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -1648,
+        -416
+      ],
+      "id": "fcc5135d-866f-4ded-8116-712dd1d71ea9",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "jsCode": "const firstItem = $input.all()[0] ? $input.all()[0].json : {};\nconst secondItem = $input.all()[1] ? $input.all()[1].json : {};\n\n// Verificar si GitHub devolvió contenido válido (tiene la propiedad content y no está vacía)\nvar hasContent = firstItem.content && firstItem.content.length > 0;\n\nif (hasContent) {\n  try {\n    // Intentar decodificar el JSON de GitHub\n    var origWorkflow = JSON.parse(Buffer.from(firstItem.content, 'base64').toString('utf8'));\n    var n8nWorkflow = secondItem;\n    \n    var orderedOriginal = {};\n    var orderedActual = {};\n    \n    Object.keys(origWorkflow).sort().forEach(function(key) {\n      orderedOriginal[key] = origWorkflow[key];\n    });\n    \n    Object.keys(n8nWorkflow).sort().forEach(function(key) {\n      orderedActual[key] = n8nWorkflow[key];\n    });\n\n    if (JSON.stringify(orderedOriginal) === JSON.stringify(orderedActual)) {\n      firstItem.github_status = \"same\";\n      firstItem.content_decoded = orderedOriginal;\n    } else {\n      firstItem.github_status = \"different\";\n      firstItem.content_decoded = orderedOriginal;\n      firstItem.n8n_data_stringy = JSON.stringify(orderedActual, null, 2);\n    }\n  } catch (e) {\n    // Si falla el parseo por cualquier motivo, lo tratamos como nuevo\n    firstItem.github_status = \"new\";\n    firstItem.n8n_data_stringy = JSON.stringify(secondItem, null, 2);\n  }\n} else {\n  // No File Returned / New Workflow o cambió el nombre y el archivo viejo no está\n  var n8nWorkflow = secondItem;\n  var orderedActual = {};\n  \n  Object.keys(n8nWorkflow).sort().forEach(function(key) {\n    orderedActual[key] = n8nWorkflow[key];\n  });\n  \n  firstItem.github_status = \"new\";\n  firstItem.n8n_data_stringy = JSON.stringify(orderedActual, null, 2);\n}\n\nreturn $input.all();"
+      },
+      "id": "f3dbfd50-360d-45ee-9e12-36d6e59d8f1e",
+      "name": "isDiffOrNew",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        -1424,
+        -416
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "Merge & Code: Unimos lo que hay en GitHub con lo que hay en N8N y usamos un pequeño script de JavaScript para comparar si hubo cambios. El nodo de Código devolverá tres posibles estados: new (nuevo), same (igual) o different (modificado).",
+        "height": 192
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1632,
+        -624
+      ],
+      "id": "9fad07dc-663f-42b9-9464-3b58c0063bd1",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.github_status }}",
+                    "rightValue": "new",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "48d342fd-dde9-4d3e-a823-12115237f3d0"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "nuevo"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "15407c72-b25b-43c2-9ca4-7afdf8d699ea",
+                    "leftValue": "={{ $json.github_status }}",
+                    "rightValue": "same",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Igual"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "3a07607f-6b4f-4f3d-bb7e-2cb446b0bef2",
+                    "leftValue": "={{ $json.github_status }}",
+                    "rightValue": "different",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "diferente"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        -1200,
+        -432
+      ],
+      "id": "da6aeb4c-1567-415e-838d-cbf226adc84a",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "owner": {
+          "__rl": true,
+          "mode": "name",
+          "value": "={{ $('Edit Fields').item.json.repo.owner }}"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "={{ $('Edit Fields').item.json.repo.name }}",
+          "mode": "name"
+        },
+        "filePath": "={{ $('Edit Fields').item.json.repo.path }}{{ $('Get many workflows').item.json.name }}.json",
+        "fileContent": "={{ $json.n8n_data_stringy }}",
+        "commitMessage": "=N8N Backup  {{ $('Loop Over Items').item.json.name }}"
+      },
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1.1,
+      "position": [
+        -928,
+        -128
+      ],
+      "id": "fc250927-3f5d-467e-a22b-d7ac9d940f2d",
+      "name": "Create a file",
+      "webhookId": "46a6396e-3c01-45b5-8c66-49cb3c45ed6e",
+      "credentials": {
+        "githubApi": {
+          "id": "RwkWdY07WCSEackY",
+          "name": "GitHub account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -912,
+        64
+      ],
+      "id": "48b6718f-6723-4f06-a4c3-7b43a7517aea",
+      "name": "No Operation, do nothing"
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "operation": "edit",
+        "owner": {
+          "__rl": true,
+          "mode": "name",
+          "value": "={{ $('Edit Fields').item.json.repo.owner }}"
+        },
+        "repository": {
+          "__rl": true,
+          "mode": "name",
+          "value": "={{ $('Edit Fields').item.json.repo.name }}"
+        },
+        "filePath": "={{ $('Edit Fields').item.json.repo.path }}{{ $('Loop Over Items').item.json.name }}.json",
+        "fileContent": "={{ $json.n8n_data_stringy }}",
+        "commitMessage": "=N8N Backup  {{ $('Loop Over Items').item.json.name }}"
+      },
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1.1,
+      "position": [
+        -880,
+        272
+      ],
+      "id": "9f6c45a4-43d5-4232-80ca-b42c2ae76b2c",
+      "name": "Edit a file",
+      "webhookId": "374c2589-2368-4fc3-a261-0506f69133c9",
+      "credentials": {
+        "githubApi": {
+          "id": "RwkWdY07WCSEackY",
+          "name": "GitHub account"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "When clicking ‘Execute workflow’": [
+      {
+        "json": {},
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ]
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "shared": [
+    {
+      "role": "workflow:owner",
+      "workflowId": "22rZ71864KufKCal",
+      "projectId": "n72aYZueYjK1JFSF",
+      "createdAt": "2026-11-11T16:42:21.407Z",
+      "updatedAt": "2026-11-11T16:42:21.407Z"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-11-12T16:43:50.811Z",
+  "versionId": "87cb90e9-2a3c-4bdb-91df-3fac5f3b68ff"
+}
