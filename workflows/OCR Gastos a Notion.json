@@ -1,0 +1,805 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Analyze document",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analyze document": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Split Out1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out1": {
+      "main": [
+        [
+          {
+            "node": "Create a database page",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a database page": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analyze document1": {
+      "main": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser1": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Notion MCP1": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent1": {
+      "main": [
+        [
+          {
+            "node": "Chat1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analyze document2": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a database page1": {
+      "main": [
+        [
+          {
+            "node": "Chat2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out2": {
+      "main": [
+        [
+          {
+            "node": "Split Out3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out3": {
+      "main": [
+        [
+          {
+            "node": "Create a database page1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser2": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Split Out2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-11-06T14:51:01.605Z",
+  "id": "7b05xWa1a9n87tnb",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "OCR Gastos a Notion",
+  "nodeGroups": [],
+  "nodes": [
+    {
+      "parameters": {
+        "options": {
+          "allowFileUploads": true,
+          "responseMode": "lastNode"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.5,
+      "position": [
+        -1424,
+        64
+      ],
+      "id": "02f6b9e7-a474-4831-aa44-0853b375f905",
+      "name": "When chat message received",
+      "webhookId": "b2ae0149-7347-4972-90c8-1c2ad61deba8"
+    },
+    {
+      "parameters": {
+        "resource": "document",
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-3.5-flash",
+          "mode": "list",
+          "cachedResultName": "Gemini 3.5 Flash"
+        },
+        "text": "El documento es una factura, recibo, ticket, o un documento de gasto. Extrae toda la información importantes como: \"Producto\", \"Precio\", \"Total\", \"Fecha\" y \"Tienda o Comercio\".",
+        "inputType": "binary",
+        "binaryPropertyName": "data0",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.2,
+      "position": [
+        -1168,
+        64
+      ],
+      "id": "27650bb1-82d9-4509-aada-b1b867d3fbd7",
+      "name": "Analyze document",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "Pxt33LNklqCjfPDI",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.content.parts[0].text }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "Actua como un expero contable que lee facturas, recibos o tickets de gastos para devolver de forma estructurada la información obtenida en el. No te diriges al usuario y solo devuelves la información solicitada.\nEl documento puede contener varias facturas; devolvé una entrada en facturas por cada una. "
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -944,
+        -48
+      ],
+      "id": "a3fb3a05-aa5c-4247-b162-74e4d20fd192",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-3.5-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.2,
+      "position": [
+        -976,
+        192
+      ],
+      "id": "e04f9af6-350b-453c-a39b-913537ac0c3f",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "Pxt33LNklqCjfPDI",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"facturas\": {\n      \"type\": \"array\",\n      \"description\": \"Una entrada por cada factura o ticket distinto dentro del documento. Si el documento tiene dos facturas, devolvé dos entradas\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"comercio\": { \"type\": \"string\", \"description\": \"Nombre del comercio de esa factura\" },\n          \"fecha\": { \"type\": \"string\", \"description\": \"Fecha de esa factura en formato YYYY-MM-DD\" },\n          \"productos\": {\n            \"type\": \"array\",\n            \"description\": \"Ítems comprados en esa factura\",\n            \"items\": {\n              \"type\": \"object\",\n              \"properties\": {\n                \"nombre\": { \"type\": \"string\", \"description\": \"Nombre del producto\" },\n                \"precio\": { \"type\": \"number\", \"description\": \"Precio del ítem, solo el número, con punto decimal y sin separador de miles\" }\n              },\n              \"required\": [\"nombre\", \"precio\"]\n            }\n          }\n        },\n        \"required\": [\"comercio\", \"fecha\", \"productos\"]\n      }\n    }\n  },\n  \"required\": [\"facturas\"]\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        -768,
+        192
+      ],
+      "id": "ba55238e-aa13-4003-b836-a1698b5c5732",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "dataSourceId": {
+          "__rl": true,
+          "value": "4100089d-ab89-8083-a1a1-000bfce84d76",
+          "mode": "list",
+          "cachedResultName": "Test MCP N8N",
+          "cachedResultUrl": "https://app.notion.com/p/4100089dab8980a0a5dae7ad9a1c1eae"
+        },
+        "title": "={{ $json.comercio }}",
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Total|number",
+              "numberValue": "={{ $json.productos.precio }}"
+            },
+            {
+              "key": "Concepto|title",
+              "title": "={{ $json.productos.nombre }}"
+            },
+            {
+              "key": "Fecha|date",
+              "includeTime": false,
+              "date": "={{ $json.fecha }}",
+              "timezone": "America/Argentina/Buenos_Aires"
+            },
+            {
+              "key": "Tienda|rich_text",
+              "textContent": "={{ $json.comercio }}"
+            }
+          ]
+        },
+        "blockUi": {
+          "blockValues": [
+            {}
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 3,
+      "position": [
+        -144,
+        64
+      ],
+      "id": "5ae0aaa7-af3f-4885-9dd8-354bae3c97e9",
+      "name": "Create a database page",
+      "credentials": {
+        "notionApi": {
+          "id": "BgJj29kX8QIxYGax",
+          "name": "Notion account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "output.facturas",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1.1,
+      "position": [
+        -592,
+        64
+      ],
+      "id": "c8f3eeea-c38e-48c8-860a-3b0b5bbe6a69",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "productos",
+        "include": "allOtherFields",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1.1,
+      "position": [
+        -368,
+        64
+      ],
+      "id": "cc1a19e1-6f59-4ecb-9ede-ab83f42511fa",
+      "name": "Split Out1"
+    },
+    {
+      "parameters": {
+        "resource": "document",
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-3.5-flash",
+          "mode": "list",
+          "cachedResultName": "Gemini 3.5 Flash"
+        },
+        "text": "El documento es una factura, recibo, ticket, o un documento de gasto. Extrae toda la información importantes como: \"Producto\", \"Precio\", \"Total\", \"Fecha\" y \"Tienda o Comercio\".",
+        "inputType": "binary",
+        "binaryPropertyName": "data0",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.2,
+      "position": [
+        -1040,
+        1008
+      ],
+      "id": "c65639b2-f88f-428a-a885-f4630c7e3d98",
+      "name": "Analyze document1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "Pxt33LNklqCjfPDI",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.content.parts[0].text }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "Actua como un expero contable que lee facturas, recibos o tickets de gastos para devolver de forma estructurada la información obtenida en el. No te diriges al usuario y solo devuelves la información solicitada.\nEl documento puede contener varias facturas; devolvé una entrada en facturas por cada una. \n\nUsa la herramienta de MCP de notion para almacenar información directamente bien estructurada en la base de datos que se llama Test MCP N8N."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -752,
+        1008
+      ],
+      "id": "eb5d14c3-9867-45fa-815a-79a577b9c520",
+      "name": "AI Agent1"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-3.5-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.2,
+      "position": [
+        -800,
+        1232
+      ],
+      "id": "f0255c69-0d26-46c4-807e-1f9da9eed9c9",
+      "name": "Google Gemini Chat Model1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "Pxt33LNklqCjfPDI",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"facturas\": {\n      \"type\": \"array\",\n      \"description\": \"Una entrada por cada factura o ticket distinto dentro del documento. Si el documento tiene dos facturas, devolvé dos entradas\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"comercio\": { \"type\": \"string\", \"description\": \"Nombre del comercio de esa factura\" },\n          \"fecha\": { \"type\": \"string\", \"description\": \"Fecha de esa factura en formato YYYY-MM-DD\" },\n          \"productos\": {\n            \"type\": \"array\",\n            \"description\": \"Ítems comprados en esa factura\",\n            \"items\": {\n              \"type\": \"object\",\n              \"properties\": {\n                \"nombre\": { \"type\": \"string\", \"description\": \"Nombre del producto\" },\n                \"precio\": { \"type\": \"number\", \"description\": \"Precio del ítem, solo el número, con punto decimal y sin separador de miles\" }\n              },\n              \"required\": [\"nombre\", \"precio\"]\n            }\n          }\n        },\n        \"required\": [\"comercio\", \"fecha\", \"productos\"]\n      }\n    }\n  },\n  \"required\": [\"facturas\"]\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        -544,
+        1232
+      ],
+      "id": "d4c8e99f-2aff-4208-a265-f03db812a3b8",
+      "name": "Structured Output Parser1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/mcp-registry.notion",
+      "typeVersion": 1.1,
+      "position": [
+        -672,
+        1232
+      ],
+      "id": "c2afe93e-e29a-4ec4-939c-691f548c359c",
+      "name": "Notion MCP1",
+      "credentials": {
+        "notionMcpOAuth2Api": {
+          "id": "uft3Z93NUjq7688g",
+          "name": "Notion account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "message": "=🟢 Datos registrados:\n\nComercio:  {{ $json.property_tienda }}\nURL notion: {{ $json.url }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chat",
+      "typeVersion": 1.3,
+      "position": [
+        -352,
+        1008
+      ],
+      "id": "7c72e4de-f816-4dac-9ada-97f06421f164",
+      "name": "Chat1",
+      "webhookId": "4d2cf3e4-81f3-4c52-8246-4f93ad6a1060"
+    },
+    {
+      "parameters": {
+        "content": "Usar otro modelo de openAI ya que Gemini no es compatible con mcp\n\n",
+        "height": 144,
+        "width": 192
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1024,
+        1216
+      ],
+      "id": "ffe9b0ad-b671-4df5-8552-7023bc296b65",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "resource": "document",
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-3.5-flash",
+          "mode": "list",
+          "cachedResultName": "Gemini 3.5 Flash"
+        },
+        "text": "El documento es una factura, recibo, ticket, o un documento de gasto. Extrae toda la información importantes como: \"Producto\", \"Precio\", \"Total\", \"Fecha\" y \"Tienda o Comercio\".",
+        "inputType": "binary",
+        "binaryPropertyName": "data0",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.2,
+      "position": [
+        -1056,
+        528
+      ],
+      "id": "14e71409-dae2-4378-bd71-d6c8e6a7adcb",
+      "name": "Analyze document2",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "Pxt33LNklqCjfPDI",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "dataSourceId": {
+          "__rl": true,
+          "value": "4100089d-ab89-8083-a1a1-000bfce84d76",
+          "mode": "list",
+          "cachedResultName": "Test MCP N8N",
+          "cachedResultUrl": "https://app.notion.com/p/4100089dab8980a0a5dae7ad9a1c1eae"
+        },
+        "title": "={{ $json.comercio }}",
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Total|number",
+              "numberValue": "={{ $json.productos.precio }}"
+            },
+            {
+              "key": "Concepto|title",
+              "title": "={{ $json.productos.nombre }}"
+            },
+            {
+              "key": "Fecha|date",
+              "includeTime": false,
+              "date": "={{ $json.fecha }}",
+              "timezone": "America/Argentina/Buenos_Aires"
+            },
+            {
+              "key": "Tienda|rich_text",
+              "textContent": "={{ $json.comercio }}"
+            }
+          ]
+        },
+        "blockUi": {
+          "blockValues": [
+            {}
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 3,
+      "position": [
+        -48,
+        528
+      ],
+      "id": "907e515b-fd3b-4447-8f09-10c8ee569794",
+      "name": "Create a database page1",
+      "credentials": {
+        "notionApi": {
+          "id": "BgJj29kX8QIxYGax",
+          "name": "Notion account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "output.facturas",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1.1,
+      "position": [
+        -480,
+        528
+      ],
+      "id": "4f4fbd25-1e82-4486-aecc-82e6432d547e",
+      "name": "Split Out2"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "productos",
+        "include": "allOtherFields",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1.1,
+      "position": [
+        -256,
+        528
+      ],
+      "id": "3a8cc991-d545-4ee1-9838-ca9c75f576ad",
+      "name": "Split Out3"
+    },
+    {
+      "parameters": {
+        "message": "=🟢 Datos registrados:\n\nComercio:  {{ $json.property_tienda }}\nURL notion: {{ $json.url }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chat",
+      "typeVersion": 1.3,
+      "position": [
+        176,
+        528
+      ],
+      "id": "15c47b7c-98cc-4fa5-8f35-3b70b6c08c45",
+      "name": "Chat2",
+      "webhookId": "4d2cf3e4-81f3-4c52-8246-4f93ad6a1060"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.content.parts[0].text }}",
+        "hasOutputParser": true,
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=Actua como un expero contable que lee facturas, recibos o tickets de gastos para devolver de forma estructurada la información obtenida en el. No te diriges al usuario y solo devuelves la información solicitada. El documento puede contener varias facturas; devolvé una entrada en facturas por cada una. "
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        -832,
+        528
+      ],
+      "id": "32e58d45-0422-43e2-bafa-01e53741d92d",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-3.5-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.2,
+      "position": [
+        -848,
+        752
+      ],
+      "id": "b0b3c76f-6b7c-47f4-9c80-9d2987730240",
+      "name": "Google Gemini Chat Model2",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "Pxt33LNklqCjfPDI",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"facturas\": {\n      \"type\": \"array\",\n      \"description\": \"Una entrada por cada factura o ticket distinto dentro del documento. Si el documento tiene dos facturas, devolvé dos entradas\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"comercio\": { \"type\": \"string\", \"description\": \"Nombre del comercio de esa factura\" },\n          \"fecha\": { \"type\": \"string\", \"description\": \"Fecha de esa factura en formato YYYY-MM-DD\" },\n          \"productos\": {\n            \"type\": \"array\",\n            \"description\": \"Ítems comprados en esa factura\",\n            \"items\": {\n              \"type\": \"object\",\n              \"properties\": {\n                \"nombre\": { \"type\": \"string\", \"description\": \"Nombre del producto\" },\n                \"precio\": { \"type\": \"number\", \"description\": \"Precio del ítem, solo el número, con punto decimal y sin separador de miles\" }\n              },\n              \"required\": [\"nombre\", \"precio\"]\n            }\n          }\n        },\n        \"required\": [\"comercio\", \"fecha\", \"productos\"]\n      }\n    }\n  },\n  \"required\": [\"facturas\"]\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        -656,
+        752
+      ],
+      "id": "01111eae-91b3-42ed-8e2d-07a3712bb0d0",
+      "name": "Structured Output Parser2"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        80,
+        64
+      ],
+      "id": "ad091baf-220d-4e50-a90d-cbaadbce2407",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "5baa1a56-0021-4118-ad4e-cbe25214808b",
+              "name": "Output",
+              "value": "=¡Gasto registrado! \nComercio: {{ $('Split Out1').first().json.comercio }}\nProductos cargados: {{ $json.data.length }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        304,
+        64
+      ],
+      "id": "3c995cf2-c3b6-4ce6-98b3-0fa9c5c628ad",
+      "name": "Edit Fields"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "timeSavedMode": "fixed",
+    "timezone": "America/Argentina/Buenos_Aires",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "role": "workflow:owner",
+      "workflowId": "7b05xWa1a9n87tnb",
+      "projectId": "n72aYZueYjK1JFSF",
+      "createdAt": "2026-11-06T14:51:01.607Z",
+      "updatedAt": "2026-11-06T14:51:01.607Z"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-11-06T17:06:27.593Z",
+  "versionId": "cdc4d683-4bd7-4a73-b02d-29f434c50804"
+}
