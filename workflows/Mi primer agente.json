@@ -1,0 +1,266 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redis Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Send a text message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create an event in Google Calendar": {
+      "ai_tool": [
+        [
+          {
+            "node": "Telegram",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-11-01T15:09:42.252Z",
+  "id": "LZcPb65CC2UYYlyA",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Mi primer agente",
+  "nodeGroups": [],
+  "nodes": [
+    {
+      "parameters": {
+        "options": {
+          "responseMode": "lastNode"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.5,
+      "position": [
+        -704,
+        -32
+      ],
+      "id": "2d98e6b7-3cef-46b3-8d3b-34576eb40580",
+      "name": "When chat message received",
+      "webhookId": "f51aa8c6-2bf1-4291-af21-6ca96cab7f08"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "=** IMPORTANTE **\nDía y hora acutal {{ $now.format('dd-MM-yyyy hh:mm') }}\nTenelo en cuenta para agendar citas.\n\n\n# ROL Y IDENTIDAD\nEres \"Mateo\" (o el nombre que elijas), el asistente virtual y asesor comercial de [NOMBRE DE TU AGENCIA/CONCESIONARIA]. Tu objetivo es atender a personas interesadas en comprar un auto, calificarlas de manera cordial y ágil, y recopilar sus datos para derivarlas con un asesor humano.\n\n# OBJETIVO PRINCIPAL\nCalificar al cliente y obtener los siguientes datos esenciales:\n1. Nombre y Apellido.\n2. Teléfono / WhatsApp de contacto (en caso de que la plataforma no lo capture automáticamente).\n3. Qué auto busca (modelo específico, segmento tipo SUV/sedán/utilitario, o uso que le dará).\n4. Rango de presupuesto aproximado o forma de compra (contado, financiado o entrega de usado).\n\n# TONO Y ESTILO DE COMUNICACIÓN\n- Cercano, profesional, empático y vendedor (estilo WhatsApp).\n- Mensajes CORTOS (máximo 2 a 3 oraciones por mensaje).\n- Haz SOLO UNA PREGUNTA por mensaje para no abrumar al cliente.\n- Si el cliente es ambiguo, dale 2 o 3 opciones fáciles para que elija.\n- NUNCA inventes stock específico ni precios finales cerrados; habla de rangos o di: *\"Tenemos opciones excelentes que se adaptan a eso, déjame pasárselo al asesor para que te envíe fotos y fichas técnicas\"*.\n\n# FLUJO DE LA CONVERSACIÓN\n1. **Saludo y primer filtro**: Saluda amablemente, agradécele el contacto y pregúntale qué modelo tiene en mente o qué tipo de auto está buscando.\n2. **Presupuesto / Modalidad**: Pregunta si busca pagar al contado, financiar una parte o si tiene algún vehículo para entregar como parte de pago.\n3. **Datos de contacto**: Si aún no tienes su nombre o número, pídelo de forma natural: *\"¡Excelente! ¿Cuál es tu nombre y a qué número de WhatsApp te puede enviar nuestro asesor las opciones disponibles?\"*.\n4. **Cierre**: Agradécele e indícale que en breve un asesor comercial se comunicará con él.\n\n# FORMATO DE SALIDA FINAL (TRIGGER DE DERIVACIÓN)\nEn el momento exacto en que tengas los datos completos y te despidas del cliente, debes incluir AL FINAL de tu respuesta el siguiente bloque de texto exacto (sin modificar las etiquetas) para que el sistema automatizado lo detecte y lo envíe por WhatsApp:\n\n[LEAD_CALIFICADO]\n👤 Nombre: {Nombre del cliente}\n📱 Teléfono: {Número de contacto}\n🚗 Busca: {Modelo, tipo de auto, año aprox o necesidades}\n💰 Modalidad/Presupuesto: {Contado / Financiado / Entrega usado / Presupuesto aprox}\n📝 Resumen: {Detalle relevante o urgencia de compra}\n[/LEAD_CALIFICADO]\n\ndispones de al tool de calendar para agendar el calendario"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -432,
+        -32
+      ],
+      "id": "754e3ba1-7b93-4821-8903-59d8d41e4438",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {
+          "temperature": 0.2
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.2,
+      "position": [
+        -544,
+        208
+      ],
+      "id": "914ccdbb-ec44-4473-a227-3faca18a906a",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "Pxt33LNklqCjfPDI",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 15
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryRedisChat",
+      "typeVersion": 1.6,
+      "position": [
+        -384,
+        208
+      ],
+      "id": "3a3a087d-f0cc-4fbc-b3be-1eead82ac0fb",
+      "name": "Redis Chat Memory",
+      "credentials": {
+        "redis": {
+          "id": "j9z2XvGyeuWJFC7x",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "8474742624",
+        "text": "={{ $json.output }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -80,
+        -32
+      ],
+      "id": "8f114405-a1e0-43a1-87ec-27b97a258ddd",
+      "name": "Send a text message1",
+      "webhookId": "d51ea4dc-bfa7-41cf-bf6f-fb3ffa1766be",
+      "credentials": {
+        "telegramApi": {
+          "id": "F9b2DQ5ex6So0vNe",
+          "name": "N8Nrobotrone_bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.sessionId }}",
+        "approvalOptions": {
+          "values": {
+            "approvalType": "double"
+          }
+        },
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegramHitlTool",
+      "typeVersion": 1.2,
+      "position": [
+        -240,
+        224
+      ],
+      "id": "ca7d9e62-eaa0-4d93-9902-2428a3f27620",
+      "name": "Telegram",
+      "webhookId": "062b407a-1533-4a46-a5a5-979fa4dd0b04",
+      "credentials": {
+        "telegramApi": {
+          "id": "F9b2DQ5ex6So0vNe",
+          "name": "N8Nrobotrone_bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "calendar": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        -160,
+        368
+      ],
+      "id": "ffc5fe5c-e3ff-4f5d-9b0a-7d5f927794f6",
+      "name": "Create an event in Google Calendar",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "qC77ylyitil0rndk",
+          "name": "Google Calendar account"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "When chat message received": [
+      {
+        "json": {
+          "action": "sendMessage",
+          "sessionId": "862a4c69d48d48d68e279490c035e981",
+          "chatInput": "mañana a la tarde"
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ]
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "timeSavedMode": "fixed",
+    "timezone": "America/Argentina/Buenos_Aires",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "role": "workflow:owner",
+      "workflowId": "LZcPb65CC2UYYlyA",
+      "projectId": "n72aYZueYjK1JFSF",
+      "createdAt": "2026-11-01T15:09:42.254Z",
+      "updatedAt": "2026-11-01T15:09:42.254Z"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-11-02T23:19:43.807Z",
+  "versionId": "2b502a85-2aa9-4607-be92-f860cc5113cf"
+}
