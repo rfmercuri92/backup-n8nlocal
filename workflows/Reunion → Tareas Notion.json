@@ -1,0 +1,783 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Fireflies": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Insert row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Split Out1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out1": {
+      "main": [
+        [
+          {
+            "node": "Insert row1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fireflies1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "Split Out2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out2": {
+      "main": [
+        [
+          {
+            "node": "Create a database page",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fireflies2": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-11-04T14:46:27.174Z",
+  "id": "jTd9U9uRQvWW8Z9u",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Reunion → Tareas Notion",
+  "nodeGroups": [],
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "reunion",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.2,
+      "position": [
+        -1680,
+        -576
+      ],
+      "id": "e6caf6a4-8776-4786-9b09-4edb5f5385f1",
+      "name": "Fireflies",
+      "webhookId": "ff6d3460-3ab5-4226-9f2e-0179e9471e28"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "Fathom",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.2,
+      "position": [
+        -1680,
+        96
+      ],
+      "id": "8ed30683-3195-4c90-af5c-6cfebca70344",
+      "name": "Fathom",
+      "webhookId": "87942edc-001e-4232-81cc-f1a535c2e694"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "Fathom",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.2,
+      "position": [
+        -1680,
+        -128
+      ],
+      "id": "41df8c57-f894-4d50-9949-27b9f33e47fe",
+      "name": "Fathom1",
+      "webhookId": "87942edc-001e-4232-81cc-f1a535c2e694"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b7297e86-0c26-43ad-aec2-0eea87c66180",
+              "name": "titulo",
+              "value": "={{ $json.body.titulo }}",
+              "type": "string"
+            },
+            {
+              "id": "f64b7d0b-b4c0-4eb5-877f-253b147b093c",
+              "name": "fecha",
+              "value": "={{ $json.body.fecha }}",
+              "type": "string"
+            },
+            {
+              "id": "9173aa5a-03ca-499a-9aeb-4c560f7c1c24",
+              "name": "resumen",
+              "value": "={{ $json.body.resumen }}",
+              "type": "string"
+            },
+            {
+              "id": "7e4cfec5-51de-40a6-a5ef-410f6dc50453",
+              "name": "tarea",
+              "value": "={{ $json.body.tareas }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        -1456,
+        -576
+      ],
+      "id": "b58ccd3b-267a-4594-b68d-f0774ac33344",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "tarea",
+        "include": "allOtherFields",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1.1,
+      "position": [
+        -1232,
+        -576
+      ],
+      "id": "e1cad5ed-1458-4669-b286-c06e5d0065ff",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "value": "g5zV4BL8e22Z9pKF",
+          "mode": "list",
+          "cachedResultName": "Reuniones",
+          "cachedResultUrl": "/projects/n72aYZueYjK1JFSF/datatables/g5zV4BL8e22Z9pKF"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Titulo": "={{ $json.titulo }}",
+            "Fecha": "={{ $json.fecha }}",
+            "Resumen": "={{ $json.resumen }}",
+            "Tarea": "={{ $json.tarea }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Titulo",
+              "displayName": "Titulo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Fecha",
+              "displayName": "Fecha",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Resumen",
+              "displayName": "Resumen",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Tarea",
+              "displayName": "Tarea",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        -1008,
+        -576
+      ],
+      "id": "aaa21eff-cf60-4f9e-a236-ef97579bcf5c",
+      "name": "Insert row"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b7297e86-0c26-43ad-aec2-0eea87c66180",
+              "name": "titulo",
+              "value": "={{ $json.body.titulo }}",
+              "type": "string"
+            },
+            {
+              "id": "f64b7d0b-b4c0-4eb5-877f-253b147b093c",
+              "name": "fecha",
+              "value": "={{ $json.body.fecha }}",
+              "type": "string"
+            },
+            {
+              "id": "9173aa5a-03ca-499a-9aeb-4c560f7c1c24",
+              "name": "resumen",
+              "value": "={{ $json.body.resumen }}",
+              "type": "string"
+            },
+            {
+              "id": "7e4cfec5-51de-40a6-a5ef-410f6dc50453",
+              "name": "tareas",
+              "value": "={{ $json.body.tareas }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        -1456,
+        -352
+      ],
+      "id": "62982296-60fc-4169-b5ab-2143690d266a",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "tareas",
+        "include": "allOtherFields",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1.1,
+      "position": [
+        -1232,
+        -352
+      ],
+      "id": "64927a2d-dc07-4b35-b5eb-13c6e2fd4577",
+      "name": "Split Out1"
+    },
+    {
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "value": "g5zV4BL8e22Z9pKF",
+          "mode": "list",
+          "cachedResultName": "Reuniones",
+          "cachedResultUrl": "/projects/n72aYZueYjK1JFSF/datatables/g5zV4BL8e22Z9pKF"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Titulo": "={{ $json.titulo }}",
+            "Fecha": "={{ $json.fecha }}",
+            "Resumen": "={{ $json.resumen }}",
+            "Tarea": "={{ $json.tareas }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Titulo",
+              "displayName": "Titulo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Fecha",
+              "displayName": "Fecha",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Resumen",
+              "displayName": "Resumen",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Tarea",
+              "displayName": "Tarea",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        -1008,
+        -352
+      ],
+      "id": "99ad6b8a-0523-4130-927f-3d4c20071e0e",
+      "name": "Insert row1"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "reunion",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.2,
+      "position": [
+        -1680,
+        -352
+      ],
+      "id": "ea4331d3-6bec-4b5e-a320-f5dba0dd7170",
+      "name": "Fireflies1",
+      "webhookId": "ff6d3460-3ab5-4226-9f2e-0179e9471e28"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b7297e86-0c26-43ad-aec2-0eea87c66180",
+              "name": "titulo",
+              "value": "={{ $json.body.titulo }}",
+              "type": "string"
+            },
+            {
+              "id": "f64b7d0b-b4c0-4eb5-877f-253b147b093c",
+              "name": "fecha",
+              "value": "={{ $json.body.fecha }}",
+              "type": "string"
+            },
+            {
+              "id": "9173aa5a-03ca-499a-9aeb-4c560f7c1c24",
+              "name": "resumen",
+              "value": "={{ $json.body.resumen }}",
+              "type": "string"
+            },
+            {
+              "id": "7e4cfec5-51de-40a6-a5ef-410f6dc50453",
+              "name": "tareas",
+              "value": "={{ $json.body.tareas }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        -1472,
+        -896
+      ],
+      "id": "f0e04baf-2604-4c38-97cc-9a5b0b1c1a0a",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "tareas",
+        "include": "allOtherFields",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1.1,
+      "position": [
+        -1248,
+        -896
+      ],
+      "id": "b1d69633-a657-46cf-97cf-6b19c1cc519b",
+      "name": "Split Out2"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "reunion",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.2,
+      "position": [
+        -1696,
+        -896
+      ],
+      "id": "ae19bd16-db7a-438e-a6f7-0515eedf11cd",
+      "name": "Fireflies2",
+      "webhookId": "ff6d3460-3ab5-4226-9f2e-0179e9471e28"
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "dataSourceId": {
+          "__rl": true,
+          "value": "40e0089d-ab89-8064-b7c1-000b777294eb",
+          "mode": "list",
+          "cachedResultName": "Tareas N8N test",
+          "cachedResultUrl": "https://app.notion.com/p/40e0089dab89809c918ecf8dec2d7842"
+        },
+        "title": "={{ $json.tareas }}",
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "reunion|rich_text",
+              "textContent": "={{ $json.titulo }}"
+            },
+            {
+              "key": "Fecha|rich_text",
+              "textContent": "={{ $json.fecha }}"
+            },
+            {
+              "key": "resumen|rich_text",
+              "textContent": "={{ $json.resumen }}"
+            },
+            {
+              "key": "Estado|select",
+              "selectValue": "Pendiente"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 3,
+      "position": [
+        -1024,
+        -896
+      ],
+      "id": "f415158e-8e82-46c6-96c5-bd95e5ea0238",
+      "name": "Create a database page",
+      "credentials": {
+        "notionApi": {
+          "id": "BgJj29kX8QIxYGax",
+          "name": "Notion account"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "Fireflies": [
+      {
+        "json": {
+          "headers": {
+            "host": "localhost:5678",
+            "user-agent": "curl/8.21.0",
+            "accept": "*/*",
+            "content-type": "application/json",
+            "content-length": "148"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "titulo": "Relevamiento con Lucho",
+            "fecha": "2026-11-04",
+            "resumen": "Hablamos de automatizar turnos",
+            "tareas": [
+              "Pasar lista de precios",
+              "Armar demo"
+            ]
+          },
+          "webhookUrl": "http://localhost:5678/webhook-test/reunion",
+          "executionMode": "test"
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ],
+    "Edit Fields": [
+      {
+        "json": {
+          "titulo": "Relevamiento con Lucho",
+          "fecha": "2026-11-04",
+          "resumen": "Hablamos de automatizar turnos",
+          "tarea": [
+            "Pasar lista de precios",
+            "Armar demo"
+          ]
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ],
+    "Split Out": [
+      {
+        "json": {
+          "titulo": "Relevamiento con Lucho",
+          "fecha": "2026-11-04",
+          "resumen": "Hablamos de automatizar turnos",
+          "tarea": "Pasar lista de precios"
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      },
+      {
+        "json": {
+          "titulo": "Relevamiento con Lucho",
+          "fecha": "2026-11-04",
+          "resumen": "Hablamos de automatizar turnos",
+          "tarea": "Armar demo"
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ],
+    "Fireflies1": [
+      {
+        "json": {
+          "headers": {
+            "host": "localhost:5678",
+            "user-agent": "curl/8.21.0",
+            "accept": "*/*",
+            "content-type": "application/json",
+            "content-length": "148"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "titulo": "Relevamiento con Lucho",
+            "fecha": "2026-11-04",
+            "resumen": "Hablamos de automatizar turnos",
+            "tareas": [
+              "Pasar lista de precios",
+              "Armar demo",
+              "Definir horarios de atencion",
+              "Revisar como toma turnos hoy",
+              "Mandar presupuesto"
+            ]
+          },
+          "webhookUrl": "http://localhost:5678/webhook-test/reunion",
+          "executionMode": "test"
+        }
+      }
+    ],
+    "Fireflies2": [
+      {
+        "json": {
+          "headers": {
+            "host": "localhost:5678",
+            "user-agent": "curl/8.21.0",
+            "accept": "*/*",
+            "content-type": "application/json",
+            "content-length": "148"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "titulo": "Relevamiento con Lucho",
+            "fecha": "2026-11-04",
+            "resumen": "Hablamos de automatizar turnos",
+            "tareas": [
+              "Pasar lista de precios",
+              "Armar demo",
+              "Definir horarios de atencion",
+              "Revisar como toma turnos hoy",
+              "Mandar presupuesto"
+            ]
+          },
+          "webhookUrl": "http://localhost:5678/webhook-test/reunion",
+          "executionMode": "test"
+        }
+      }
+    ],
+    "Edit Fields2": [
+      {
+        "json": {
+          "titulo": "Relevamiento con Lucho",
+          "fecha": "2026-11-04",
+          "resumen": "Hablamos de automatizar turnos",
+          "tareas": [
+            "Pasar lista de precios",
+            "Armar demo",
+            "Definir horarios de atencion",
+            "Revisar como toma turnos hoy",
+            "Mandar presupuesto"
+          ]
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ],
+    "Split Out2": [
+      {
+        "json": {
+          "titulo": "Relevamiento con Lucho",
+          "fecha": "2026-11-04",
+          "resumen": "Hablamos de automatizar turnos",
+          "tareas": "Pasar lista de precios"
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      },
+      {
+        "json": {
+          "titulo": "Relevamiento con Lucho",
+          "fecha": "2026-11-04",
+          "resumen": "Hablamos de automatizar turnos",
+          "tareas": "Armar demo"
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      },
+      {
+        "json": {
+          "titulo": "Relevamiento con Lucho",
+          "fecha": "2026-11-04",
+          "resumen": "Hablamos de automatizar turnos",
+          "tareas": "Definir horarios de atencion"
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      },
+      {
+        "json": {
+          "titulo": "Relevamiento con Lucho",
+          "fecha": "2026-11-04",
+          "resumen": "Hablamos de automatizar turnos",
+          "tareas": "Revisar como toma turnos hoy"
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      },
+      {
+        "json": {
+          "titulo": "Relevamiento con Lucho",
+          "fecha": "2026-11-04",
+          "resumen": "Hablamos de automatizar turnos",
+          "tareas": "Mandar presupuesto"
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ]
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "shared": [
+    {
+      "role": "workflow:owner",
+      "workflowId": "jTd9U9uRQvWW8Z9u",
+      "projectId": "n72aYZueYjK1JFSF",
+      "createdAt": "2026-11-04T14:46:27.175Z",
+      "updatedAt": "2026-11-04T14:46:27.175Z"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-11-05T14:32:17.018Z",
+  "versionId": "c1da7d2b-1618-4ad3-a35b-c6ba983f423e"
+}
